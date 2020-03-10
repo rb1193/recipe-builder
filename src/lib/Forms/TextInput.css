@@ -1,0 +1,24 @@
+.TextInput
+{
+    display: block;
+    margin-bottom: var(--spacing-sm);
+}
+
+.TextInput__Label
+{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.TextInput__Input
+{
+    border: 1px solid grey;
+    padding: 3px;
+}
+
+.TextInput__Errors
+{
+    background-color: lightcoral;
+    border: 2px solid red;
+    padding: 3px;
+}

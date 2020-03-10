@@ -1,0 +1,24 @@
+.TextAreaInput
+{
+    display: block;
+    margin-bottom: var(--spacing-sm);
+}
+
+.TextAreaInput__Label
+{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.TextAreaInput__Input
+{
+    border: 1px solid grey;
+    padding: 3px;
+}
+
+.TextAreaInput__Errors
+{
+    background-color: lightcoral;
+    border: 2px solid red;
+    padding: 3px;
+}
