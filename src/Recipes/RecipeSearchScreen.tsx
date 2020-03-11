@@ -8,14 +8,14 @@ import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage';
 
 export interface RecipeSearchFormValues {
     query: string,
-    page: number,
+    page: string,
 }
 
 function useLoadMoreRecipes() {
     const query = new URLSearchParams(useLocation().search);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false)
     const [hasMore, setHasMore] = useState<boolean>(true)
-    const [state, setState] = useState<RecipeSearchFormValues>({ query: query.get('query') || '', page: 1 })
+    const [state, setState] = useState<RecipeSearchFormValues>({ query: query.get('query') || '', page: '1' })
     const [error, setError] = useState<Error>()
     const [recipes, setRecipes] = useState<Recipe[]>([])
 
@@ -25,10 +25,10 @@ function useLoadMoreRecipes() {
                 setIsLoadingMore(true)
                 const response = await Recipes.search({query: state.query, page: state.page})
                 setRecipes((recipes: Recipe[]) => {
-                    return state.page === 1 ? response.data : recipes.concat(response.data);
+                    return state.page === '1' ? response.data : recipes.concat(response.data);
                 })
                 setIsLoadingMore(false)
-                setHasMore(response.meta.last_page > state.page)
+                setHasMore(response.meta.last_page > +(state.page))
             } catch (e) {
                 if (e.data) setError(e.data)
             }
@@ -54,7 +54,7 @@ export default function RecipeSearchScreen(): ReactElement {
     function searchSubmitHandler(event: FormEvent): void {
         event.preventDefault()
         const queryString = queryValue.current?.value || ''
-        setState({ query: queryString, page: 1})
+        setState({ query: queryString, page: '1'})
         history.push('/?query=' + queryString)
     }
 

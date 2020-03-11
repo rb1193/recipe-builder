@@ -1,12 +1,12 @@
-import { RecipeSearchFormValues } from "../Recipes/RecipeSearchScreen";
+import { QueryValues } from "../Recipes/PaginatedRecipeSearchScreen";
 import { RestResponse, PaginatedRestResponse } from "../lib/Api/RestResponse";
 import { CreateRecipeFormValues } from "../Recipes/RecipeCreateForm";
 import Recipe from '../Contracts/Recipe';
 
 const Recipes = {
-    search: (values: RecipeSearchFormValues): Promise<PaginatedRestResponse<Recipe[]>> => {
+    search: (values: QueryValues): Promise<PaginatedRestResponse<Recipe[]>> => {
         return new Promise((resolve, reject) => {
-            switch(values.page) {
+            switch(+(values.page)) {
                 case 1:
                     setTimeout(() => {
                         //reject(new Error('Unauthenticated'))

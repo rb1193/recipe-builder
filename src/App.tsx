@@ -6,7 +6,6 @@ import LoginForm from './Auth/LoginForm';
 import RegisterForm from './Auth/RegisterFormContainer';
 import Auth from './Api/Auth';
 import { UserContext } from './Context';
-import RecipeSearchScreen from './Recipes/RecipeSearchScreen';
 import PaginatedRecipeSearchScreen from './Recipes/PaginatedRecipeSearchScreen';
 import User from './Contracts/User';
 import { Route, Switch } from 'react-router-dom';
