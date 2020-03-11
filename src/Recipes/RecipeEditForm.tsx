@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useState, useEffect, useContext } from "react";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import * as Yup from "yup";
 import TextInput, { TextInputTypes } from "../lib/Forms/TextInput";
@@ -7,6 +7,9 @@ import Recipes from "../Api/Recipes";
 import { useHistory, useParams } from "react-router";
 import Recipe from "../Contracts/Recipe";
 import { ApiRequest, ApiRequestStatus, fetchApiRequest, SuccessfulRequest, FailedRequest } from "../lib/Api/ApiRequest";
+import { NotificationContext } from "../Context";
+import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
+import { NotificationActionType } from '../lib/Notifications/useNotifications';
 
 export interface EditRecipeFormValues {
     name: string,
@@ -18,6 +21,7 @@ export interface EditRecipeFormValues {
 
 export default function EditRecipeForm(): ReactElement {
     let history = useHistory();
+    const {dispatch} = useContext(NotificationContext)
 
     const { recipeId } = useParams()
 
@@ -53,6 +57,13 @@ export default function EditRecipeForm(): ReactElement {
         fetchApiRequest(Recipes.update(recipeId, values)).then((request: SuccessfulRequest<Recipe>) => {
             // Complete submission before redirecting using history API, don't be tempted to use finally()
             actions.setSubmitting(false);
+            dispatch({
+                type: NotificationActionType.ADD,
+                payload: {
+                    message: `${request.payload.data.name} created successfully`,
+                    level: NotificationLevel.info
+                }
+            })
             history.push('/recipes/' + request.payload.data.id);
         }).catch((request: FailedRequest) => {
             if (request.payload.data && request.payload.data.errors) {
