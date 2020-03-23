@@ -1,8 +1,8 @@
 export type ApiError = { message: string, errors?: { [key: string]: string } }
 
 export type PaginationMeta = {
-    last_page: number,
     current_page: number,
+    last_page: number,
     per_page: number,
 }
 

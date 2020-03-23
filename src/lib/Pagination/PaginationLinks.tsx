@@ -14,8 +14,9 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
     const { links, meta } = props
     const location = useLocation()
     let queryString = new URLSearchParams(location.search)
+    const displayedLinks = Math.min(links, meta.last_page)
 
-    const pageLinks = R.range(1, links + 1).map((pageNumber) => {
+    const pageLinks = R.range(1, displayedLinks + 1).map((pageNumber) => {
         queryString.set('page', pageNumber.toString())
         return <Link
             key={pageNumber}
