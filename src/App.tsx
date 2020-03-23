@@ -34,7 +34,7 @@ function App() {
                         <Route exact path='/'>
                             {isNull(user)
                                 ? <PaneSlider panes={[
-                                    {label: 'Login', component: <LoginForm />},
+                                    {label: 'Login', component: <LoginForm onLogin={setUser} />},
                                     {label: 'Register', component: <RegisterForm />}
                                 ]} />
                                 :<UserContext.Provider value={user}>

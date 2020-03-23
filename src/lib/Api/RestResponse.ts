@@ -1,4 +1,4 @@
-export type ApiError = { message: string, errors?: {key: string, message: string}[]}
+export type ApiError = { message: string, errors?: { [key: string]: string } }
 
 export type PaginationMeta = {
     last_page: number,

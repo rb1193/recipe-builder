@@ -10,8 +10,8 @@ export default function ApiErrorMessage(props: ApiErrorMessageProps): ReactEleme
     const { error } = props
 
     if (error) {
-        const list = error.errors && error.errors.map((error) => {
-            return <li key={error.key}>{error.message}</li>
+        const list = error.errors && Object.keys(error.errors).map((message, key) => {
+            return <li key={key}>{message}</li>
         })
 
         return (

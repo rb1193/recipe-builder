@@ -2,70 +2,18 @@ import { QueryValues } from "../Recipes/PaginatedRecipeSearchScreen";
 import { RestResponse, PaginatedRestResponse } from "../lib/Api/RestResponse";
 import { CreateRecipeFormValues } from "../Recipes/RecipeCreateForm";
 import Recipe from '../Contracts/Recipe';
+import defaultRequestOptions from './defaultRequestOptions';
+import qs from 'qs';
 
 const Recipes = {
     search: (values: QueryValues): Promise<PaginatedRestResponse<Recipe[]>> => {
-        return new Promise((resolve, reject) => {
-            switch(+(values.page)) {
-                case 1:
-                    setTimeout(() => {
-                        //reject(new Error('Unauthenticated'))
-                        resolve(
-                            {
-                                code: 200,
-                                data: [{
-                                    id: "sfdsfdsfds",
-                                    name: 'Stew',
-                                    description: 'Tasty',
-                                    ingredients: '1 potato, 2 potato',
-                                    cooking_time: 100,
-                                    method: '',
-                                }],
-                                meta: {
-                                    per_page: 1,
-                                    last_page: 2,
-                                    current_page: 1,
-                                } 
-                            }
-                        )
-                    }, 2000);
-                    break;
-                case 2:
-                    setTimeout(() => {
-                        //reject(new Error('Unauthenticated'))
-                        resolve(
-                            {
-                                code: 200,
-                                data: [{
-                                    id: "asdrert",
-                                    name: 'SpagBol',
-                                    description: 'MMMMMM',
-                                    ingredients: '1 tomato, 2 tomato',
-                                    cooking_time: 100,
-                                    method: '',
-                                }],
-                                meta: {
-                                    per_page: 1,
-                                    last_page: 2,
-                                    current_page: 2
-                                } 
-                            }
-                        )
-                    }, 2000);
-                    break;
-                default:
-                    setTimeout(() => {
-                        //reject(new Error('Unauthenticated'))
-                        reject(
-                            {
-                                code: 500,
-                                data: {
-                                    message: "Damn"
-                                },
-                            }
-                        )
-                    }, 250);
-            }
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'GET',
+        }
+        const params = qs.stringify(values)
+        return fetch(`${process.env.REACT_APP_API_URL}/recipes?${params}`, options).then((res) => {
+            return res.json()
         })
     },
     store: async (values: CreateRecipeFormValues): Promise<RestResponse<Recipe>> => {
