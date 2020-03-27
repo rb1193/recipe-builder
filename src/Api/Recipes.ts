@@ -17,47 +17,40 @@ const Recipes = {
         })
     },
     store: async (values: CreateRecipeFormValues): Promise<RestResponse<Recipe>> => {
-        return new Promise<RestResponse<Recipe>>((resolve, reject) => {
-            setTimeout(() => {
-                const recipe = {...values, cooking_time: 20}
-                resolve({
-                    code: 200,
-                    data: {
-                        id: Math.random().toString(36),
-                        ...recipe
-                    },
-                })
-            }, 250)
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'POST',
+            body: JSON.stringify(values)
+        }
+
+        return fetch(`${process.env.REACT_APP_API_URL}/recipes`, options).then((res) => {
+            return res.json()
         })
     },
     update: async (id: string, values: CreateRecipeFormValues): Promise<RestResponse<Recipe>> => {
-        return new Promise<RestResponse<Recipe>>((resolve, reject) => {
-            setTimeout(() => {
-                const recipe = {...values, cooking_time: 20}
-                resolve({
-                    code: 200,
-                    data: {
-                        id: id,
-                        ...recipe
-                    },
-                })
-            }, 250)
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'PUT',
+            body: JSON.stringify(values)
+        }
+
+        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${id}`, options).then((res) => {
+            return res.json()
         })
     },
     one: async (recipeId: string): Promise<RestResponse<Recipe>> => {
-        return new Promise<RestResponse<Recipe>>((resolve) => {
-            resolve({
-                code: 200,
-                data: {
-                    id: recipeId,
-                    name: "Lala",
-                    description: "L",
-                    method: "looo",
-                    cooking_time: 10,
-                    ingredients: "1 onion",
-                },
-            })
-        })
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'GET',
+        }
+        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options).then((res) => res.json())
+    },
+    delete: async(recipeId: string): Promise<void> => {
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'DELETE',
+        }
+        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options).then()
     }
 }
 

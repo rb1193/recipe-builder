@@ -6,31 +6,30 @@ import TextAreaInput from "../lib/Forms/TextAreaInput";
 import Recipes from "../Api/Recipes";
 import { useHistory, useParams } from "react-router";
 import Recipe from "../Contracts/Recipe";
-import { ApiRequest, ApiRequestStatus, fetchApiRequest, SuccessfulRequest, FailedRequest } from "../lib/Api/ApiRequest";
 import { NotificationContext } from "../Context";
 import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
 import { NotificationActionType } from '../lib/Notifications/useNotifications';
+import { RestResponse, ApiError } from "../lib/Api/RestResponse";
+import ApiLoadingMessage from "../lib/Api/ApiLoadingMessage";
+import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
+import { Link } from "react-router-dom";
 
-export interface EditRecipeFormValues {
-    name: string,
-    description: string,
-    method: string,
-    cooking_time: number | '',
-    ingredients: string,
-}
+export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
 export default function EditRecipeForm(): ReactElement {
     let history = useHistory();
-    const {dispatch} = useContext(NotificationContext)
-
+    const { dispatch } = useContext(NotificationContext)
     const { recipeId } = useParams()
-
-    const [recipeRequest, setRecipeRequest] = useState<ApiRequest<Recipe>>({status: ApiRequestStatus.new})
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<ApiError>()
+    const [recipe, setRecipe] = useState<Recipe>()
 
     useEffect(() => {
-        fetchApiRequest(Recipes.one(recipeId || '')).then((request: ApiRequest<Recipe>) => {
-            setRecipeRequest(request)
-        })
+        Recipes.one(recipeId || '').then((res: RestResponse<Recipe>) => {
+            setRecipe(res.data)
+        }).catch((res: RestResponse<ApiError>) => {
+            setError(res.data)
+        }).finally(() => setIsLoading(true))
     }, [recipeId])
 
     const validationSchema = Yup.object().shape({
@@ -54,38 +53,45 @@ export default function EditRecipeForm(): ReactElement {
 
     function handleSubmit(values: EditRecipeFormValues, actions: FormikHelpers<EditRecipeFormValues>): void {
         if (!recipeId) throw Error
-        fetchApiRequest(Recipes.update(recipeId, values)).then((request: SuccessfulRequest<Recipe>) => {
+        setIsLoading(true)
+        Recipes.update(recipeId, values).then((request: RestResponse<Recipe>) => {
             // Complete submission before redirecting using history API, don't be tempted to use finally()
             actions.setSubmitting(false);
+
+            // Dispatch a notification
             dispatch({
                 type: NotificationActionType.ADD,
                 payload: {
-                    message: `${request.payload.data.name} created successfully`,
+                    message: `${request.data.name} updated successfully`,
                     level: NotificationLevel.info
                 }
             })
-            history.push('/recipes/' + request.payload.data.id);
-        }).catch((request: FailedRequest) => {
-            if (request.payload.data && request.payload.data.errors) {
-                actions.setErrors(request.payload.data.errors as FormikErrors<EditRecipeFormValues>);
+
+            // Redirect to recipe page
+            history.push('/recipes/' + request.data.id);
+        }).catch((res: RestResponse<ApiError>) => {
+            setError(res.data)
+            if (res.data.errors) {
+                actions.setErrors(res.data.errors as FormikErrors<EditRecipeFormValues>);
             }
             actions.setSubmitting(false);
-        });
+        }).finally(() => setIsLoading(false));
     }
 
-    switch(recipeRequest.status) {
-        case ApiRequestStatus.new:
-        case ApiRequestStatus.pending:
-            return (<div>Loading</div>)
-        case ApiRequestStatus.failed:
-            return recipeRequest.payload
-                ? (<div>Error: {recipeRequest.payload.data.message}</div>)
-                : (<div>Unknown error</div>)
-        case ApiRequestStatus.success:
-            const initialValues: EditRecipeFormValues = recipeRequest.payload.data
-            return (
-                <Formik component={form} initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}/>
-            );
-            
+    const initialValues = {
+        name: recipe?.name || '',
+        description: recipe?.description || '',
+        cooking_time: recipe?.cooking_time || 0,
+        method: recipe?.method || '',
+        ingredients: recipe?.ingredients || '',
     }
+
+    return (
+        <div className="RecipeEditForm">
+            <Link to='/'>Back to search</Link>
+            <ApiLoadingMessage isLoading={isLoading} />
+            <ApiErrorMessage error={error} />
+            <Formik component={form} enableReinitialize={true} initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}/>
+        </div>
+    );
 }

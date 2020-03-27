@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import * as Yup from "yup";
 import TextInput, { TextInputTypes } from "../lib/Forms/TextInput";
@@ -6,10 +6,13 @@ import TextAreaInput from "../lib/Forms/TextAreaInput";
 import Recipes from "../Api/Recipes";
 import { useHistory } from "react-router";
 import Recipe from "../Contracts/Recipe";
-import { fetchApiRequest, SuccessfulRequest, FailedRequest } from "../lib/Api/ApiRequest";
 import { NotificationContext } from "../Context";
 import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
 import { NotificationActionType } from "../lib/Notifications/useNotifications";
+import { RestResponse, ApiError } from "../lib/Api/RestResponse";
+import ApiLoadingMessage from "../lib/Api/ApiLoadingMessage";
+import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
+import { Link } from "react-router-dom";
 
 export interface CreateRecipeFormValues {
     name: string,
@@ -22,6 +25,8 @@ export interface CreateRecipeFormValues {
 export default function CreateRecipeForm(): ReactElement {
     let history = useHistory();
     const { dispatch } = useContext(NotificationContext)
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState<ApiError>()
 
     const initialValues: CreateRecipeFormValues = {
         name: '',
@@ -51,26 +56,33 @@ export default function CreateRecipeForm(): ReactElement {
     }
 
     function handleSubmit(values: CreateRecipeFormValues, actions: FormikHelpers<CreateRecipeFormValues>): void {
-        fetchApiRequest(Recipes.store(values)).then((request: SuccessfulRequest<Recipe>) => {
+        setIsLoading(true)
+        Recipes.store(values).then((res: RestResponse<Recipe>) => {
             // Complete submission before redirecting using history API, don't be tempted to use finally()
             actions.setSubmitting(false);
             dispatch({
                 type: NotificationActionType.ADD,
                 payload: {
-                    message: `${request.payload.data.name} created successfully`,
+                    message: `${res.data.name} created successfully`,
                     level: NotificationLevel.info
                 }
             })
-            history.push('/recipes/' + request.payload.data.id);
-        }).catch((request: FailedRequest) => {
-            if (request.payload.data && request.payload.data.errors) {
-                actions.setErrors(request.payload.data.errors as FormikErrors<CreateRecipeFormValues>);
+            history.push('/recipes/' + res.data.id);
+        }).catch((request: RestResponse<ApiError>) => {
+            setError(error)
+            if (request.data && request.data.errors) {
+                actions.setErrors(request.data.errors as FormikErrors<CreateRecipeFormValues>);
             }
             actions.setSubmitting(false);
-        });
+        }).finally(() => setIsLoading(false));
     }
 
     return (
-        <Formik component={form} initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}/>
+        <>
+            <Link to='/'>Back to search</Link>
+            <ApiLoadingMessage isLoading={isLoading} />
+            <ApiErrorMessage error={error} />
+            <Formik component={form} initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}/>
+        </>
     );
 }

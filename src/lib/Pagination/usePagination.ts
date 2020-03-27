@@ -22,7 +22,6 @@ export default function usePagination<T, P>(initialParams: P) {
 
     useEffect(() => {
         setIsLoading(true)
-        console.log(query)
         Recipes.search(query as unknown as QueryValues).then((response: PaginatedRestResponse<Recipe[]>) => {
             setItems(response.data)
             setConfig(response.meta)
