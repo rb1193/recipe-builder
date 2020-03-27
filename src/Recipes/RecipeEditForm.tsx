@@ -1,23 +1,25 @@
-import React, { ReactElement, useState, useEffect, useContext } from "react";
-import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
-import * as Yup from "yup";
-import TextInput, { TextInputTypes } from "../lib/Forms/TextInput";
-import TextAreaInput from "../lib/Forms/TextAreaInput";
-import Recipes from "../Api/Recipes";
-import { useHistory, useParams } from "react-router";
-import Recipe from "../Contracts/Recipe";
-import { NotificationContext } from "../Context";
-import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
-import { NotificationActionType } from '../lib/Notifications/useNotifications';
-import { RestResponse, ApiError } from "../lib/Api/RestResponse";
-import ApiLoadingMessage from "../lib/Api/ApiLoadingMessage";
-import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
-import { Link } from "react-router-dom";
+import React, { ReactElement, useState, useEffect, useContext } from 'react'
+import { Formik, Form, FormikHelpers } from 'formik'
+import * as Yup from 'yup'
+import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
+import TextAreaInput from '../lib/Forms/TextAreaInput'
+import Recipes from '../Api/Recipes'
+import { useHistory, useParams } from 'react-router'
+import Recipe from '../Contracts/Recipe'
+import { NotificationContext } from '../Context'
+import { NotificationLevel } from '../lib/Notifications/NotificationBanner'
+import { NotificationActionType } from '../lib/Notifications/useNotifications'
+import { RestResponse, ApiError } from '../lib/Api/RestResponse'
+import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
+import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
+import { Link } from 'react-router-dom'
+import { RequestError } from '../Api/RequestError'
+import parseRequestError from '../Api/parseRequestError'
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
 export default function EditRecipeForm(): ReactElement {
-    let history = useHistory();
+    let history = useHistory()
     const { dispatch } = useContext(NotificationContext)
     const { recipeId } = useParams()
     const [isLoading, setIsLoading] = useState(true)
@@ -25,57 +27,100 @@ export default function EditRecipeForm(): ReactElement {
     const [recipe, setRecipe] = useState<Recipe>()
 
     useEffect(() => {
-        Recipes.one(recipeId || '').then((res: RestResponse<Recipe>) => {
-            setRecipe(res.data)
-        }).catch((res: RestResponse<ApiError>) => {
-            setError(res.data)
-        }).finally(() => setIsLoading(true))
+        fetch(Recipes.one(recipeId || ''))
+            .then(res => {
+                if (!res.ok) throw new RequestError(res)
+                return res.json()
+            })
+            .then((res: RestResponse<Recipe>) => {
+                setRecipe(res.data)
+            })
+            .catch((err) => {
+                parseRequestError(err).then((err: ApiError) => {
+                    setError(err)
+                })
+            })
+            .finally(() => setIsLoading(true))
     }, [recipeId])
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required().label('Name'),
-        description: Yup.string().required().label('Description'),
-        method: Yup.string().required().label('Method'),
-        cooking_time: Yup.number().required().positive().integer().label('Cooking Time'),
-        ingredients: Yup.string().required().label('Ingredients'),
+        name: Yup.string()
+            .required()
+            .label('Name'),
+        description: Yup.string()
+            .required()
+            .label('Description'),
+        method: Yup.string()
+            .required()
+            .label('Method'),
+        cooking_time: Yup.number()
+            .required()
+            .positive()
+            .integer()
+            .label('Cooking Time'),
+        ingredients: Yup.string()
+            .required()
+            .label('Ingredients'),
     })
 
     function form() {
-        return <Form noValidate>
-            <TextInput type={TextInputTypes.Text} name="name" label="Name"/>
-            <TextAreaInput name="description" label="Short Description"/>
-            <TextAreaInput name="method" label="Method"/>
-            <TextAreaInput name="ingredients" label="Ingredients"/>
-            <TextInput type={TextInputTypes.Number} name="cooking_time" label="Cooking Time (Minutes)"/>
-            <button type="submit">Save</button>
-        </Form>
+        return (
+            <Form noValidate>
+                <TextInput
+                    type={TextInputTypes.Text}
+                    name="name"
+                    label="Name"
+                />
+                <TextAreaInput name="description" label="Short Description" />
+                <TextAreaInput name="method" label="Method" />
+                <TextAreaInput name="ingredients" label="Ingredients" />
+                <TextInput
+                    type={TextInputTypes.Number}
+                    name="cooking_time"
+                    label="Cooking Time (Minutes)"
+                />
+                <button type="submit">Save</button>
+            </Form>
+        )
     }
 
-    function handleSubmit(values: EditRecipeFormValues, actions: FormikHelpers<EditRecipeFormValues>): void {
+    function handleSubmit(
+        values: EditRecipeFormValues,
+        actions: FormikHelpers<EditRecipeFormValues>,
+    ): void {
         if (!recipeId) throw Error
         setIsLoading(true)
-        Recipes.update(recipeId, values).then((request: RestResponse<Recipe>) => {
-            // Complete submission before redirecting using history API, don't be tempted to use finally()
-            actions.setSubmitting(false);
-
-            // Dispatch a notification
-            dispatch({
-                type: NotificationActionType.ADD,
-                payload: {
-                    message: `${request.data.name} updated successfully`,
-                    level: NotificationLevel.info
-                }
+        fetch(Recipes.update(recipeId, values))
+            .then((res) => {
+                if (!res.ok) throw new RequestError(res)
+                return res.json()
             })
+            .then((res: RestResponse<Recipe>) => {
+                // Complete submission before redirecting using history API, don't be tempted to use finally()
+                actions.setSubmitting(false)
 
-            // Redirect to recipe page
-            history.push('/recipes/' + request.data.id);
-        }).catch((res: RestResponse<ApiError>) => {
-            setError(res.data)
-            if (res.data.errors) {
-                actions.setErrors(res.data.errors as FormikErrors<EditRecipeFormValues>);
-            }
-            actions.setSubmitting(false);
-        }).finally(() => setIsLoading(false));
+                // Dispatch a notification
+                dispatch({
+                    type: NotificationActionType.ADD,
+                    payload: {
+                        message: `${res.data.name} updated successfully`,
+                        level: NotificationLevel.info,
+                    },
+                })
+
+                // Redirect to recipe page
+                history.push('/recipes/' + res.data.id)
+            })
+            .catch((err) => {
+                parseRequestError(err).then((err: ApiError) => {
+                    setError(err)
+                    if (err.errors) {
+                        actions.setErrors(err.errors)
+                    }
+                })
+                actions.setSubmitting(false)
+            })
+            .finally(() => setIsLoading(false))
     }
 
     const initialValues = {
@@ -88,10 +133,15 @@ export default function EditRecipeForm(): ReactElement {
 
     return (
         <div className="RecipeEditForm">
-            <Link to='/'>Back to search</Link>
+            <Link to="/">Back to search</Link>
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
-            <Formik component={form} enableReinitialize={true} initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}/>
+            <Formik
+                component={form}
+                enableReinitialize={true}
+                initialValues={initialValues}
+                onSubmit={handleSubmit} /*validationSchema={validationSchema}*/
+            />
         </div>
-    );
+    )
 }

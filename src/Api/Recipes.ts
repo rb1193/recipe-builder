@@ -1,56 +1,46 @@
 import { QueryValues } from "../Recipes/PaginatedRecipeSearchScreen";
-import { RestResponse, PaginatedRestResponse } from "../lib/Api/RestResponse";
-import { CreateRecipeFormValues } from "../Recipes/RecipeCreateForm";
-import Recipe from '../Contracts/Recipe';
 import defaultRequestOptions from './defaultRequestOptions';
 import qs from 'qs';
+import Recipe from "../Contracts/Recipe";
 
 const Recipes = {
-    search: (values: QueryValues): Promise<PaginatedRestResponse<Recipe[]>> => {
+    search: (values: QueryValues): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'GET',
         }
         const params = qs.stringify(values)
-        return fetch(`${process.env.REACT_APP_API_URL}/recipes?${params}`, options).then((res) => {
-            return res.json()
-        })
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes?${params}`, options)
     },
-    store: async (values: CreateRecipeFormValues): Promise<RestResponse<Recipe>> => {
+    store: (values: Omit<Recipe, 'id'>): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'POST',
             body: JSON.stringify(values)
         }
-
-        return fetch(`${process.env.REACT_APP_API_URL}/recipes`, options).then((res) => {
-            return res.json()
-        })
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes`, options)
     },
-    update: async (id: string, values: CreateRecipeFormValues): Promise<RestResponse<Recipe>> => {
+    update: (id: string, values: Omit<Recipe, 'id'>): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'PUT',
             body: JSON.stringify(values)
         }
-
-        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${id}`, options).then((res) => {
-            return res.json()
-        })
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${id}`, options)
     },
-    one: async (recipeId: string): Promise<RestResponse<Recipe>> => {
+    one: (recipeId: string): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'GET',
         }
-        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options).then((res) => res.json())
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options)
     },
-    delete: async(recipeId: string): Promise<void> => {
+    delete: (recipeId: string): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'DELETE',
         }
-        return fetch(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options).then()
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options)
     }
 }
 

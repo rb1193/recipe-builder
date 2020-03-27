@@ -1,4 +1,7 @@
-export type ApiError = { message: string, errors?: { [key: string]: string } }
+export interface ApiError {
+    message: string,
+    errors?: { [key: string]: string },
+}
 
 export type PaginationMeta = {
     current_page: number,

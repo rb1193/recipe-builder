@@ -1,6 +1,8 @@
 import React, { ReactElement, useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useHistory } from "react-router";
 import { Link } from 'react-router-dom';
+import { RequestError } from '../Api/RequestError';
+import parseRequestError from '../Api/parseRequestError';
 import Recipe from "../Contracts/Recipe";
 import Recipes from "../Api/Recipes";
 import { RestResponse, ApiError } from "../lib/Api/RestResponse";
@@ -23,24 +25,31 @@ export default function RecipeFull(): ReactElement
 
     useEffect(() => {
         setIsLoading(true)
-        Recipes.one(recipeId || '').then((res: RestResponse<Recipe>) => {
+        fetch(Recipes.one(recipeId || '')).then((res: Response) => {
+            if (!res.ok) throw new RequestError(res)
+            return res.json()
+        }).then((res: RestResponse<Recipe>) => {
             setRecipe(res.data)
-        }).catch((res: RestResponse<ApiError>) => {
-            setError(res.data)
+        }).catch((err) => {
+            parseRequestError(err).then((apiError) => setError(apiError))
         }).finally(() => setIsLoading(false))
     }, [recipeId])
 
     const handleDelete = async () => {
         if (!recipe) return
-        await Recipes.delete(recipe.id)
-        dispatch({
-            type: NotificationActionType.ADD,
-            payload: {
-                message: `${recipe.name} deleted successfully`,
-                level: NotificationLevel.info
-            }
-        })
-        history.push('/')
+        try {
+            await fetch(Recipes.delete(recipe.id))
+            dispatch({
+                type: NotificationActionType.ADD,
+                payload: {
+                    message: `${recipe.name} deleted successfully`,
+                    level: NotificationLevel.info
+                }
+            })
+            history.push('/')
+        } catch (err) {
+            parseRequestError(err).then((apiError) => setError(apiError))
+        }
     }
     
     return (
