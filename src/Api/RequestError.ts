@@ -2,14 +2,16 @@ import { ApiError, RestResponse } from "../lib/Api/RestResponse"
 
 export class RequestError extends Error {
     res: Response
+    error: ApiError | undefined
     
     constructor(res: Response) {
         super('API request failed')
         this.res = res
     }
 
-    public async getError(): Promise<ApiError> 
+    public getError(): ApiError 
     {
-        return this.res.json().then((res: RestResponse<ApiError>) => res.data)
+        this.res.json().then((res: RestResponse<ApiError>) => this.error = res.data)
+        return this.error || { message: 'Unknown error' }
     }
 }

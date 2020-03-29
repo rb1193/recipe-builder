@@ -35,9 +35,7 @@ export default function EditRecipeForm(): ReactElement {
                 setRecipe(res.data)
             })
             .catch((err) => {
-                parseRequestError(err).then((err: ApiError) => {
-                    setError(err)
-                })
+                setError(parseRequestError(err))
             })
             .finally(() => setIsLoading(true))
     }, [recipeId])
@@ -111,12 +109,11 @@ export default function EditRecipeForm(): ReactElement {
                 history.push('/recipes/' + res.data.id)
             })
             .catch((err) => {
-                parseRequestError(err).then((err: ApiError) => {
-                    setError(err)
-                    if (err.errors) {
-                        actions.setErrors(err.errors)
-                    }
-                })
+                const apiError = parseRequestError(err)
+                setError(apiError)
+                if (apiError.errors) {
+                    actions.setErrors(apiError.errors)
+                }
                 actions.setSubmitting(false)
             })
             .finally(() => setIsLoading(false))

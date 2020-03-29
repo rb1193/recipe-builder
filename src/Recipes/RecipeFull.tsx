@@ -31,7 +31,7 @@ export default function RecipeFull(): ReactElement
         }).then((res: RestResponse<Recipe>) => {
             setRecipe(res.data)
         }).catch((err) => {
-            parseRequestError(err).then((apiError) => setError(apiError))
+            setError(parseRequestError(err))
         }).finally(() => setIsLoading(false))
     }, [recipeId])
 
@@ -48,7 +48,7 @@ export default function RecipeFull(): ReactElement
             })
             history.push('/')
         } catch (err) {
-            parseRequestError(err).then((apiError) => setError(apiError))
+            setError(parseRequestError(err))
         }
     }
     

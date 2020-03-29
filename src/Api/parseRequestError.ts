@@ -1,12 +1,10 @@
 import { ApiError } from "../lib/Api/RestResponse";
 import { RequestError } from "./RequestError";
 
-export default async function parseRequestError(err: Error): Promise<ApiError> {
+export default function parseRequestError(err: Error): ApiError {
     if (err instanceof RequestError) {
-        return await err.getError()
+        return err.getError()
     }
 
-    return new Promise<ApiError>((resolve) => resolve({
-        message: 'Unknown server or network error'
-    }))
+    return { message: 'Unknown server or network error' }
 }

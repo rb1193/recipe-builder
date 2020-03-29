@@ -20,12 +20,13 @@ function LoginForm(): ReactElement {
 
     function submitHandler(values: LoginFormValues, actions: FormikHelpers<LoginFormValues>): void {
         Auth.login(values).then((res) => {
+            // Set submit before setting user because context change causes instant rerender
+            actions.setSubmitting(false)
             setUser(res.data)
         }).catch(() => {
             actions.setErrors({email: 'Invalid credentials provided'});
-        }).finally(() => {
             actions.setSubmitting(false);
-        });
+        })
     }
 
     function form() {

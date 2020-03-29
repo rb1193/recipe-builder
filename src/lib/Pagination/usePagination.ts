@@ -31,7 +31,7 @@ export default function usePagination<T>(requestFn: requestFn) {
                 setConfig(response.meta)
             })
             .catch((err: Error) => {
-                parseRequestError(err).then((err: ApiError) => setError(err))
+                setError(parseRequestError(err))
             })
             .finally(() => {
                 setIsLoading(false)

@@ -22,8 +22,6 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
     const last = Math.min(meta.current_page + Math.floor(links/ 2), meta.last_page)
 
     const pageLinks = R.range(first, last + 1).map((pageNumber) => {
-        console.log(pageNumber)
-        console.log(meta)
         const classes = classNames('PaginationLinks__Link', {
             'PaginationLinks__Link--Active': meta.current_page === pageNumber
         })
