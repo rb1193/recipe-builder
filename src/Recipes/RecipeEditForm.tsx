@@ -140,7 +140,8 @@ export default function EditRecipeForm(): ReactElement {
                 component={form}
                 enableReinitialize={true}
                 initialValues={initialValues}
-                onSubmit={handleSubmit} /*validationSchema={validationSchema}*/
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
             />
         </div>
     )
