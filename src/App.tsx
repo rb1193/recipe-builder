@@ -6,7 +6,7 @@ import LoginForm from './Auth/LoginForm';
 import RegisterForm from './Auth/RegisterFormContainer';
 import Auth from './Api/Auth';
 import { UserContext, NotificationContext } from './Context';
-import PaginatedRecipeSearchScreen from './Recipes/PaginatedRecipeSearchScreen';
+import RecipeSearchScreen from './Recipes/RecipeSearchScreen';
 import User from './Contracts/User';
 import { Route, Switch } from 'react-router-dom';
 import RecipeCreateForm from './Recipes/RecipeCreateForm';
@@ -38,7 +38,7 @@ function App() {
                                     {label: 'Register', component: <RegisterForm />}
                                 ]} />
                                 :<UserContext.Provider value={user}>
-                                    <PaginatedRecipeSearchScreen />
+                                    <RecipeSearchScreen />
                                 </UserContext.Provider>
                             }
                         </Route>

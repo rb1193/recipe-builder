@@ -5,7 +5,7 @@ import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
-import RecipeCardList from '../Recipes/RecipeCardList'
+import RecipeCardList from './RecipeCardList'
 import usePagination from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs from 'qs'
@@ -15,7 +15,7 @@ type QueryState = {
     page?: string,
 }
 
-export default function PaginatedRecipeSearchScreen() {
+export default function RecipeSearchScreen() {
     let history = useHistory()
 
     const { isLoading, error, items, config, load } = usePagination<Recipe>(Recipes.search)
