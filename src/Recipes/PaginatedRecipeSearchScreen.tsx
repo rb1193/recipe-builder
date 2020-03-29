@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
+import Recipes from '../Api/Recipes'
 import RecipeCardList from '../Recipes/RecipeCardList'
 import usePagination from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
@@ -14,23 +15,15 @@ type QueryState = {
     page?: string,
 }
 
-export type QueryValues = {
-    query: string,
-    page: string,
-}
-
 export default function PaginatedRecipeSearchScreen() {
     let history = useHistory()
 
-    const { isLoading, error, items, config, setQuery } = usePagination<Recipe, QueryValues>({
-        query: '',
-        page: '1'
-    })
+    const { isLoading, error, items, config, load } = usePagination<Recipe>(Recipes.search)
     const queryValue = useRef<HTMLInputElement>(null)
 
     history.listen((location) => {
         const values: QueryState = qs.parse(location.search.slice(1))
-        setQuery({
+        load({
             query: values.query || '',
             page: values.page || '1',
         })

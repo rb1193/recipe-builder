@@ -1,10 +1,14 @@
-import { QueryValues } from "../Recipes/PaginatedRecipeSearchScreen";
 import defaultRequestOptions from './defaultRequestOptions';
 import qs from 'qs';
 import Recipe from "../Contracts/Recipe";
 
+type SearchValues = {
+    query: string,
+    page: string,
+}
+
 const Recipes = {
-    search: (values: QueryValues): Request => {
+    search: (values: SearchValues): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'GET',
