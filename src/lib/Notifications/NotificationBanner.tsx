@@ -1,13 +1,7 @@
 import React, { useContext } from "react"
 import { NotificationContext } from '../../Context'
 import classNames from 'classnames'
-import { NotificationActionType } from "./useNotifications"
-
-export enum NotificationLevel {
-    info = 'info',
-    warning = 'warning',
-    error = 'error'
-}
+import { NotificationActionType, NotificationLevel } from "./useNotifications"
 
 export type AppNotification = {
     message: string,

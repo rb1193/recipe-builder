@@ -9,8 +9,7 @@ import { RestResponse, ApiError } from "../lib/Api/RestResponse";
 import ApiLoadingMessage from "../lib/Api/ApiLoadingMessage";
 import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
 import { NotificationContext } from '../Context';
-import { NotificationActionType } from '../lib/Notifications/useNotifications'
-import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
+import { NotificationActionType, NotificationLevel } from '../lib/Notifications/useNotifications'
 import ConfirmationModal from "../lib/Modals/ConfirmationModal";
 
 export default function RecipeFull(): ReactElement

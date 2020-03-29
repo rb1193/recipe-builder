@@ -1,21 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ReactElement } from 'react';
 import { Form, FormikValues, FormikHelpers, Formik } from 'formik';
 import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
-import User from '../Contracts/User';
+import { UserContext } from '../Context';
 
 export interface LoginFormValues extends FormikValues {
     email: string,
     password: string,
 }
 
-interface LoginFormProps {
-    onLogin(user: User): void
-}
-
-function LoginForm(props: LoginFormProps): ReactElement {
-    const { onLogin } = props
+function LoginForm(): ReactElement {
+    const { setUser } = useContext(UserContext)
 
     const initialValues: LoginFormValues = {
         email: "",
@@ -24,8 +20,7 @@ function LoginForm(props: LoginFormProps): ReactElement {
 
     function submitHandler(values: LoginFormValues, actions: FormikHelpers<LoginFormValues>): void {
         Auth.login(values).then((res) => {
-            onLogin(res.data)
-            console.log('logged in')
+            setUser(res.data)
         }).catch(() => {
             actions.setErrors({email: 'Invalid credentials provided'});
         }).finally(() => {

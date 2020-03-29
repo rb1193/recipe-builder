@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { isNull } from 'util';
 import PaneSlider from './lib/PaneSlider';
 import LoginForm from './Auth/LoginForm';
 import RegisterForm from './Auth/RegisterFormContainer';
@@ -12,8 +11,9 @@ import { Route, Switch } from 'react-router-dom';
 import RecipeCreateForm from './Recipes/RecipeCreateForm';
 import RecipeEditForm from './Recipes/RecipeEditForm';
 import RecipeFull from './Recipes/RecipeFull';
-import NotificationBanner, { NotificationLevel } from './lib/Notifications/NotificationBanner'
-import useNotifications, { NotificationActionType } from './lib/Notifications/useNotifications';
+import NotificationBanner from './lib/Notifications/NotificationBanner'
+import useNotifications from './lib/Notifications/useNotifications';
+import LogoutButton from './Auth/LogoutButton';
 
 function App() {
     const [user, setUser] = useState<User | null>(null);
@@ -28,23 +28,8 @@ function App() {
         });
     }, [])
 
-    const logout = async() => {
-        try {
-            await Auth.logout()
-            setUser(null)
-        } catch (Error) {
-            dispatch({
-                type: NotificationActionType.ADD,
-                payload: {
-                    message: `Log out operation failed`,
-                    level: NotificationLevel.info,
-                },
-            })
-        }
-    }
-
     const auth = <PaneSlider panes={[
-        {label: 'Login', component: <LoginForm onLogin={setUser} />},
+        {label: 'Login', component: <LoginForm/>},
         {label: 'Register', component: <RegisterForm />}
     ]} />
 
@@ -53,11 +38,11 @@ function App() {
     return (
         <div className="App">
             <NotificationContext.Provider value={initialNotificationContext}>
-                <UserContext.Provider value={user}>
+                <UserContext.Provider value={{user: user, setUser: setUser}}>
                     <header className="App__Header">
                         <h1>My Recipe Library</h1>
                         <nav className="App__Menu">
-                            {user && <button className="App__MenuButton" type="button" onClick={logout}>Log Out</button>}
+                            {user && <LogoutButton/>}
                         </nav>
                     </header>
                     <NotificationBanner notifications={notifications} />

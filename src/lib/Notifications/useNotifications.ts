@@ -6,6 +6,12 @@ export enum NotificationActionType {
     REMOVE = 'remove',
 }
 
+export enum NotificationLevel {
+    info = 'info',
+    warning = 'warning',
+    error = 'error'
+}
+
 export type NotificationReducerAction = {
     type: NotificationActionType,
     payload: AppNotification
