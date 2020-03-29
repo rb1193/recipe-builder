@@ -1,0 +1,16 @@
+.PaginationLinks__Link {
+    background-color: var(--color-primary);
+    border: transparent 3px solid;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.PaginationLinks__Link:hover {
+    border: var(--color-primary) 3px solid;
+}
+
+.PaginationLinks__Link--Active {
+    background-color: var(--color-primary--dark);
+}

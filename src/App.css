@@ -1,13 +1,32 @@
 .App {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100vh;
+    justify-content: flex-start;
 }
 
-.App-header {
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  text-align: center;
+.App__Header {
+    align-items: center;
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    justify-content: center;
+    text-align: center;
+}
+
+.App__Container {
+    max-width: 90vw;
+    margin: auto;
+    padding: var(--spacing-lg) 0;
+    width: 1000px;
+}
+
+.App__Footer {
+    background-color: var(--color-primary);
+    color: white;
+    flex-grow: 2;
+    text-align: center;
 }

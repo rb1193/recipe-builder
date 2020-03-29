@@ -11,6 +11,7 @@ import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
 import { NotificationContext } from '../Context';
 import { NotificationActionType } from '../lib/Notifications/useNotifications'
 import { NotificationLevel } from "../lib/Notifications/NotificationBanner";
+import ConfirmationModal from "../lib/Modals/ConfirmationModal";
 
 export default function RecipeFull(): ReactElement
 {
@@ -67,7 +68,12 @@ export default function RecipeFull(): ReactElement
                     <h2>Ingredients</h2>
                     <p>{recipe?.ingredients}</p>
                     <Link to={location.pathname + '/edit'}>Edit recipe</Link>
-                    <button type="button" onClick={handleDelete}>Delete recipe</button>
+                    <ConfirmationModal
+                        confirmationMessage="Are you sure you want to delete this recipe?"
+                        onConfirm={handleDelete}
+                        buttonClass="RecipeFull__DeleteButton"
+                        buttonText="Delete"
+                    />
                 </>
             }
         </article>

@@ -25,11 +25,11 @@ function App() {
     return (
         <div className="App">
             <NotificationContext.Provider value={initialNotificationContext}>
-                <header className="App-header">
+                <header className="App__Header">
                     <h1>My Recipe Library</h1>
                 </header>
                 <NotificationBanner notifications={notifications} />
-                <main>
+                <main className="App__Container">
                     <Switch>
                         <Route exact path='/'>
                             {isNull(user)
@@ -54,11 +54,9 @@ function App() {
                     </Switch>
                 </main>
             </NotificationContext.Provider>
-            <hr></hr>
-            <footer>
+            <footer className="App__Footer">
                 <p>Made by Ryan</p>
             </footer>
-            
         </div>
     );
 }

@@ -15,7 +15,7 @@ export default function usePagination<T>(requestFn: requestFn) {
     const [items, setItems] = useState<T[]>([])
     const [config, setConfig] = useState<PaginationMeta>({
         current_page: 1,
-        last_page: 1,
+        last_page: 0,
         per_page: 20,
     })
 

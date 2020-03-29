@@ -1,0 +1,28 @@
+.ConfirmationModal {
+    background-color: white;
+    border: 3px solid darkslategrey;
+    display: none;
+    left: 50vw;
+    max-width: 90vw;
+    padding: 20px;
+    position: fixed;
+    top: 30vw;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.ConfirmationModal--Open {
+    display: block;
+}
+
+.ConfirmationModal__Message {
+    font-size: 1.4rem;
+    line-height: 1.2rem;
+}
+
+.ConfirmationModal__Button {
+    background-color: darkslategrey;
+    color: white;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
