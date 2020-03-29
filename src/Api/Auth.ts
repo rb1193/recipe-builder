@@ -25,6 +25,16 @@ const Auth = {
             return response.json()
         })
     },
+    logout: async(): Promise<null> => {
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'POST',
+        }
+        return fetch(`${process.env.REACT_APP_API_URL}/logout`, options).then((res: Response) => {
+            if (!res.ok) throw new Error('Logout failed')
+            return null
+        })
+    },
     user: async (): Promise<RestResponse<User>> => {
         const fetchOptions: RequestInit = {
             ...defaultRequestOptions,

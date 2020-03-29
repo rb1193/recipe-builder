@@ -25,6 +25,7 @@ function LoginForm(props: LoginFormProps): ReactElement {
     function submitHandler(values: LoginFormValues, actions: FormikHelpers<LoginFormValues>): void {
         Auth.login(values).then((res) => {
             onLogin(res.data)
+            console.log('logged in')
         }).catch(() => {
             actions.setErrors({email: 'Invalid credentials provided'});
         }).finally(() => {

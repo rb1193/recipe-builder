@@ -9,6 +9,7 @@ import RecipeCardList from './RecipeCardList'
 import usePagination from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs from 'qs'
+import './RecipeSearchScreen.css'
 
 type QueryState = {
     query?: string,
@@ -37,7 +38,8 @@ export default function RecipeSearchScreen() {
 
     return (
         <div className="RecipeSearchScreen">
-            <Link to="/recipes/create">Add a recipe</Link>
+            <Link to="/recipes/create" className="RecipeSearchScreen__AddRecipeLink">Add a recipe</Link>
+            <h2>Search your recipes:</h2>
             <form noValidate className="RecipeSearchScreen__Form" onSubmit={searchSubmitHandler}>
                 <input type="search" name="query" defaultValue={''} ref={queryValue} id="RecipeSearch_QueryInput" />
                 <button type="submit">Search</button>

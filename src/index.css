@@ -10,6 +10,7 @@
 }
 
 body {
+  color: #333;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'PT Serif', 'Times New Roman', 'serif';
   -webkit-font-smoothing: antialiased;
