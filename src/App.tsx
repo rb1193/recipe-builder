@@ -42,8 +42,6 @@ function App() {
             })
     }, [])
 
-    console.log(user)
-
     return (
         <div className="App">
             <NotificationContext.Provider value={initialNotificationContext}>
