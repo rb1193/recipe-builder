@@ -25,9 +25,14 @@ export default function ConfirmationModal(props: ConfirmationModalProps): React.
         'ConfirmationModal--Open': isOpen,
     })
 
+    const overlayClass = classNames('ConfirmationModal__Overlay', {
+        'ConfirmationModal__Overlay--Active': isOpen,
+    })
+
     return (
         <>
             <button className={buttonClass} type="button" onClick={openModal}>{buttonText}</button>
+            <div className={overlayClass} onClick={closeModal} />
             <div className={modalClass}>
                 <p className="ConfirmationModal__Message">{confirmationMessage}</p>
                 <button type="button" className="ConfirmationModal__Button ConfirmationModal__Button--Confirm" onClick={onConfirm}>Confirm</button>

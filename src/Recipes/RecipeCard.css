@@ -1,0 +1,11 @@
+.RecipeCard
+{
+    border-bottom: 1px dashed var(--color-grey);
+    list-style: none;
+    padding: var(--spacing-md)
+}
+
+.RecipeCard__Title
+{
+    margin-top: 0;
+}

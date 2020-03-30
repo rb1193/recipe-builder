@@ -1,6 +1,5 @@
 import React, { useRef, FormEvent, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import { Link } from 'react-router-dom'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
@@ -10,10 +9,11 @@ import usePagination from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs from 'qs'
 import './RecipeSearchScreen.css'
+import { SubmitButton } from '../lib/Buttons/Buttons'
 
 type QueryState = {
-    query?: string,
-    page?: string,
+    query?: string
+    page?: string
 }
 
 export default function RecipeSearchScreen() {
@@ -23,12 +23,12 @@ export default function RecipeSearchScreen() {
     const queryValue = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        const unregister = history.listen((location) => {
+        const unregister = history.listen(location => {
             // Do not attempt to load data if user has left this screen
             if (location.pathname !== '/') {
                 return
             }
-    
+
             const values: QueryState = qs.parse(location.search.slice(1))
             load({
                 query: values.query || '',
@@ -40,8 +40,7 @@ export default function RecipeSearchScreen() {
             unregister()
         }
     }, [history, load])
-    
-    
+
     function searchSubmitHandler(event: FormEvent): void {
         event.preventDefault()
         const queryString = queryValue.current?.value || ''
@@ -50,16 +49,28 @@ export default function RecipeSearchScreen() {
 
     return (
         <div className="RecipeSearchScreen">
-            <Link to="/recipes/create" className="RecipeSearchScreen__AddRecipeLink">Add a recipe</Link>
-            <h2>Search your recipes:</h2>
-            <form noValidate className="RecipeSearchScreen__Form" onSubmit={searchSubmitHandler}>
-                <input type="search" name="query" defaultValue={''} ref={queryValue} id="RecipeSearch_QueryInput" />
-                <button type="submit">Search</button>
+            <form
+                noValidate
+                className="RecipeSearchScreen__Form"
+                onSubmit={searchSubmitHandler}
+            >
+                <input
+                    aria-label="Recipe search input"
+                    autoComplete="off"
+                    className="RecipeSearchScreen__SearchInput"
+                    type="search"
+                    name="query"
+                    defaultValue={''}
+                    ref={queryValue}
+                    id="RecipeSearch_QueryInput"
+                    placeholder="Enter some ingredients..."
+                />
+                <SubmitButton text="Search recipes" />
             </form>
             <ApiErrorMessage error={error} />
             <ApiLoadingMessage isLoading={isLoading} />
-            <RecipeCardList recipes={items} />
-            <PaginationLinks meta={config} links={5} includeEnds={false}/>
+            <RecipeCardList isLoading={isLoading} recipes={items} />
+            <PaginationLinks meta={config} links={5} includeEnds={false} />
         </div>
     )
 }

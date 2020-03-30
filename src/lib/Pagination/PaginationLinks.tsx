@@ -37,7 +37,7 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
         >{pageNumber}</Link>
     })
 
-    return <div className="Pagination__Links">
+    return <div className="PaginationLinks">
         {pageLinks}
     </div>
 }

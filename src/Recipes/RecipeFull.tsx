@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useHistory } from "react-router";
-import { Link } from 'react-router-dom';
 import { RequestError } from '../Api/RequestError';
 import parseRequestError from '../Api/parseRequestError';
 import Recipe from "../Contracts/Recipe";
@@ -11,6 +10,7 @@ import ApiErrorMessage from "../lib/Api/ApiErrorMessage";
 import { NotificationContext } from '../Context';
 import { NotificationActionType, NotificationLevel } from '../lib/Notifications/useNotifications'
 import ConfirmationModal from "../lib/Modals/ConfirmationModal";
+import { LinkButton } from "../lib/Buttons/Buttons";
 
 export default function RecipeFull(): ReactElement
 {
@@ -54,7 +54,7 @@ export default function RecipeFull(): ReactElement
     
     return (
         <article className="RecipeFull">
-            <Link to='/'>Back to search</Link>
+            <LinkButton to="/" text="Back To Search" />
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
             {recipe && 
@@ -66,11 +66,11 @@ export default function RecipeFull(): ReactElement
                     <p>{recipe?.method}</p>
                     <h2>Ingredients</h2>
                     <p>{recipe?.ingredients}</p>
-                    <Link to={location.pathname + '/edit'}>Edit recipe</Link>
+                    <LinkButton to={`${location.pathname}/edit`} text="Edit" />
                     <ConfirmationModal
                         confirmationMessage="Are you sure you want to delete this recipe?"
                         onConfirm={handleDelete}
-                        buttonClass="RecipeFull__DeleteButton"
+                        buttonClass="Button Button--Danger"
                         buttonText="Delete"
                     />
                 </>

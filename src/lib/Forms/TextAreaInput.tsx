@@ -15,7 +15,7 @@ export default function TextAreaInput(props: TextAreaInputProps) {
     return (
         <div className="TextAreaInput">
             <label className="TextAreaInput__Label" htmlFor={name}>{label}</label>
-            <textarea {...field} className="TextAreInput__Input" id={id || name}/>
+            <textarea {...field} className="TextAreaInput__Input" id={id || name}/>
             {meta.touched && meta.error ? (
                 <div className='TextAreaInput__Errors'><span>{meta.error}</span></div>
             ) : null}

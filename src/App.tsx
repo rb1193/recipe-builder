@@ -12,6 +12,7 @@ import RecipeFull from './Recipes/RecipeFull';
 import NotificationBanner from './lib/Notifications/NotificationBanner'
 import useNotifications from './lib/Notifications/useNotifications';
 import LogoutButton from './Auth/LogoutButton';
+import { LinkButton } from './lib/Buttons/Buttons';
 
 function App() {
     const [user, setUser] = useState<User | null>(null);
@@ -32,9 +33,12 @@ function App() {
                 <UserContext.Provider value={{user: user, setUser: setUser}}>
                     <header className="App__Header">
                         <h1>My Recipe Library</h1>
-                        <nav className="App__Menu">
-                            {user && <LogoutButton/>}
-                        </nav>
+                        {user && <>
+                            <nav className="App__Menu">
+                                <LinkButton to='/recipes/create' text="Add Recipe"/>
+                                <LogoutButton/>
+                            </nav>
+                        </>}
                     </header>
                     <NotificationBanner notifications={notifications} />
                     <main className="App__Container">

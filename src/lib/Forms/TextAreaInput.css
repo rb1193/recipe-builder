@@ -6,14 +6,22 @@
 
 .TextAreaInput__Label
 {
+    color:  var(--color-grey-dark);
     display: block;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
     margin-bottom: 5px;
 }
 
 .TextAreaInput__Input
 {
-    border: 1px solid grey;
-    padding: 3px;
+    border: 1px solid var(--color-grey);
+    color: var(--color-grey-dark);
+    display: block;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
+    padding: 12px;
+    width: 100%;
 }
 
 .TextAreaInput__Errors

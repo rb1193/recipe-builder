@@ -1,16 +1,28 @@
+.PaginationLinks {
+    margin-top: var(--spacing-md);
+}
+
 .PaginationLinks__Link {
     background-color: var(--color-primary);
-    border: transparent 3px solid;
-    color: white;
-    padding: 5px 10px;
-    margin-right: 10px;
+    border: none;
+    border-radius: 0;
+    color: var(--color-grey-dark);
+    display: inline-block;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
+    margin-right: var(--spacing-sm);
+    padding: 12px 12px;
     text-decoration: none;
+    vertical-align: bottom;
 }
 
 .PaginationLinks__Link:hover {
-    border: var(--color-primary) 3px solid;
+    background-color: var(--color-primary-dark);
+    color: var(--color-grey-light)
 }
 
 .PaginationLinks__Link--Active {
-    background-color: var(--color-primary--dark);
+    background-color: var(--color-primary-dark);
+    color: var(--color-grey-light);
+    cursor: auto;
 }

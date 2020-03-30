@@ -1,19 +1,20 @@
-import React, { ReactElement } from 'react';
-import Recipe from '../Contracts/Recipe';
-import { Link } from 'react-router-dom';
+import React, { ReactElement } from 'react'
+import Recipe from '../Contracts/Recipe'
+import { LinkButton } from '../lib/Buttons/Buttons'
+import './RecipeCard.css'
 
 interface RecipeCardProps {
-    recipe: Recipe,
+    recipe: Recipe
 }
 
 export default function RecipeCard(props: RecipeCardProps): ReactElement {
-    const {recipe} = props;
+    const { recipe } = props
     return (
-        <li>
-            <h2>{recipe.name}</h2>
+        <li className="RecipeCard">
+            <h2 className="RecipeCard__Title">{recipe.name}</h2>
             <p>{recipe.description}</p>
             <p>Cooking time: {recipe.cooking_time} minutes</p>
-            <Link to={"/recipes/" + recipe.id}>View full recipe</Link>
+            <LinkButton to={`/recipes/${recipe.id}`} text="View full recipe" />
         </li>
-    );
+    )
 }

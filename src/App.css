@@ -1,20 +1,26 @@
 .App {
+    background-color: var(--color-primary-light);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    height: 100vh;
+    height: 100%;
     justify-content: flex-start;
 }
 
 .App__Header {
     align-items: center;
-    background-color: var(--color-primary);
-    color: white;
+    background-color: white;
+    color: var(--color-grey-dark);
     display: flex;
     flex-direction: column;
     font-size: calc(10px + 2vmin);
     justify-content: center;
     text-align: center;
+}
+
+.App__Menu {
+    width: 100%;
+    text-align: right;
 }
 
 .App__Container {
@@ -25,8 +31,8 @@
 }
 
 .App__Footer {
-    background-color: var(--color-primary);
-    color: white;
+    background-color: white;
+    color: var(--color-grey-dark);
     flex-grow: 2;
     text-align: center;
 }

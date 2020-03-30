@@ -11,9 +11,9 @@ import { NotificationActionType, NotificationLevel } from '../lib/Notifications/
 import { RestResponse, ApiError } from '../lib/Api/RestResponse'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
-import { Link } from 'react-router-dom'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
+import { LinkButton, SubmitButton } from '../lib/Buttons/Buttons'
 
 export default function CreateRecipeForm(): ReactElement {
     let history = useHistory()
@@ -65,7 +65,7 @@ export default function CreateRecipeForm(): ReactElement {
                     name="cooking_time"
                     label="Cooking Time (Minutes)"
                 />
-                <button type="submit">Create</button>
+                <SubmitButton text="Create Recipe" />
             </Form>
         )
     }
@@ -105,7 +105,8 @@ export default function CreateRecipeForm(): ReactElement {
 
     return (
         <>
-            <Link to="/">Back to search</Link>
+            <LinkButton to="/" text="Back To Search" />
+            <h2>Add a New Recipe</h2>
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
             <Formik

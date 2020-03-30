@@ -1,0 +1,12 @@
+.LoginForm {
+    background-color: white;
+    border: var(--color-primary) solid 5px;
+    margin: auto;
+    max-width: 90vw;
+    padding: var(--spacing-lg);
+    width: 600px;
+}
+
+.LoginForm__Title {
+    margin-top: 0;
+}

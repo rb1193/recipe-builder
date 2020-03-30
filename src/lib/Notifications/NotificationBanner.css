@@ -1,0 +1,33 @@
+.NotificationBanner__Container {
+    max-width: 90vw;
+    margin: auto;
+    width: 1000px;
+}
+
+.NotificationBanner__Notification {
+    align-items: center;
+    background-color: #d4edda;
+    display: flex;
+    font-size: calc(10px + 1.2vh);
+    justify-content: space-between;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.NotificationBanner__DismissButton {
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
+    margin-left: var(--spacing-sm);
+    padding: 12px 25px;
+    vertical-align: middle;
+    background-color: var(--color-primary);
+    color: var(--color-grey-dark);
+}
+
+.NotificationBanner__DismissButton:hover {
+    background-color: var(--color-primary-dark);
+    color: var(--color-grey-light)
+}

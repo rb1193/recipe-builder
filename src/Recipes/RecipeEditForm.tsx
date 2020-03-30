@@ -11,9 +11,9 @@ import { NotificationActionType, NotificationLevel } from '../lib/Notifications/
 import { RestResponse, ApiError } from '../lib/Api/RestResponse'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
-import { Link } from 'react-router-dom'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
+import { SubmitButton, LinkButton } from '../lib/Buttons/Buttons'
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
@@ -26,6 +26,7 @@ export default function EditRecipeForm(): ReactElement {
     const [recipe, setRecipe] = useState<Recipe>()
 
     useEffect(() => {
+        setIsLoading(true)
         fetch(Recipes.one(recipeId || ''))
             .then(res => {
                 if (!res.ok) throw new RequestError(res)
@@ -37,7 +38,7 @@ export default function EditRecipeForm(): ReactElement {
             .catch((err) => {
                 setError(parseRequestError(err))
             })
-            .finally(() => setIsLoading(true))
+            .finally(() => setIsLoading(false))
     }, [recipeId])
 
     const validationSchema = Yup.object().shape({
@@ -76,7 +77,7 @@ export default function EditRecipeForm(): ReactElement {
                     name="cooking_time"
                     label="Cooking Time (Minutes)"
                 />
-                <button type="submit">Save</button>
+                <SubmitButton text="Save Changes" />
             </Form>
         )
     }
@@ -129,16 +130,19 @@ export default function EditRecipeForm(): ReactElement {
 
     return (
         <div className="RecipeEditForm">
-            <Link to="/">Back to search</Link>
+            <LinkButton to="/" text="Back To Search" />
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
-            <Formik
-                component={form}
-                enableReinitialize={true}
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-            />
+            {recipe && <>
+                <h2>Edit "{recipe.name}"</h2>
+                <Formik
+                    component={form}
+                    enableReinitialize={true}
+                    initialValues={initialValues}
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}
+                />
+            </>}
         </div>
     )
 }

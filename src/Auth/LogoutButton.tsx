@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { NotificationContext, UserContext } from '../Context'
 import { NotificationActionType, NotificationLevel } from '../lib/Notifications/useNotifications'
 import Auth from '../Api/Auth'
+import { ActionButton } from '../lib/Buttons/Buttons'
 
 export default function LogoutButton(): React.ReactElement {
     const { setUser } = useContext(UserContext)
@@ -22,5 +23,5 @@ export default function LogoutButton(): React.ReactElement {
         }
     }
 
-    return (<button className="LogoutButton" type="button" onClick={logout}>Log Out</button>)
+    return (<ActionButton text="Log Out" onClick={logout} />)
 }

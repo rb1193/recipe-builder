@@ -8,10 +8,25 @@
     position: fixed;
     top: 30vw;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 2;
 }
 
 .ConfirmationModal--Open {
+    display: block;
+}
+
+.ConfirmationModal__Overlay {
+    background-color: #000;
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.ConfirmationModal__Overlay--Active {
     display: block;
 }
 
@@ -21,8 +36,26 @@
 }
 
 .ConfirmationModal__Button {
-    background-color: darkslategrey;
-    color: white;
-    margin-right: 10px;
-    padding: 5px 10px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
+    margin-right: var(--spacing-sm);
+    padding: 12px 25px;
+    background-color: var(--color-primary);
+    color: var(--color-grey-dark);
+}
+
+.ConfirmationModal__Button:hover {
+    background-color: var(--color-primary-dark);
+    color: var(--color-grey-light)
+}
+
+.ConfirmationModal__Button--Cancel {
+    background-color: var(--color-grey-light);
+}
+
+.ConfirmationModal__Button--Cancel:hover {
+    background-color: var(--color-grey);
 }

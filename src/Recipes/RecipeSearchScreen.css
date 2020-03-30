@@ -1,16 +1,13 @@
-.RecipeSearchScreen__AddRecipeLink
-{
-    background: var(--color-primary);
-    border: 3px solid var(--color-primary);
-    color: white;
-    display: inline-block;
-    margin-bottom: var(--spacing-md);
-    padding: 5px 10px;
-    text-decoration: none;
+.RecipeSearchScreen__Form {
+    display: flex;
 }
 
-.RecipeSearchScreen__AddRecipeLink:hover
-{
-    background: white;
-    color: var(--color-primary)
+.RecipeSearchScreen__SearchInput {
+    border: none;
+    color: var(--color-grey-dark);
+    display: inline-block;
+    flex-grow: 1;
+    font-size: calc(10px + 1.2vh);
+    line-height: calc(12px + 1.3vh);
+    padding: 12px;
 }

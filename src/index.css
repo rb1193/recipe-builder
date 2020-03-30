@@ -1,23 +1,52 @@
 @import-normalize;
 
 :root {
-  --color-primary: #5F95A1;
-  --color-primary--dark: #2C626E;
+    --color-primary: #6daeb1;
+    --color-primary-light: #eff5f4;
+    --color-primary-dark: #2c626e;
+    --color-grey-light: #eee;
+    --color-grey: #bbb;
+    --color-grey-dark: #444;
 
-  --spacing-sm: 10px;
-  --spacing-md: 20px;
-  --spacing-lg: 50px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 50px;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-  color: #333;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'PT Serif', 'Times New Roman', 'serif';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    color: #333;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helevtics Neue',
+        'Helvetica', 'sans-serif';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+textarea {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helevtics Neue',
+        'Helvetica', 'sans-serif';
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: -apple-system, BlinkMacSystemFont, 'PT Serif',
+        'Times New Roman', 'serif';
+}
+
+h2 {
+    font-size: calc(10px + 2vh);
+    line-height: calc(12px + 2.2vh);
 }

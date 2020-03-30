@@ -4,6 +4,8 @@ import { Form, FormikValues, FormikHelpers, Formik } from 'formik';
 import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
 import { UserContext } from '../Context';
+import './LoginForm.css'
+import { SubmitButton } from '../lib/Buttons/Buttons';
 
 export interface LoginFormValues extends FormikValues {
     email: string,
@@ -33,12 +35,13 @@ function LoginForm(): ReactElement {
         return <Form noValidate>
             <TextInput name="email" label="Email" type={TextInputTypes.Email} id="login_email"></TextInput>
             <TextInput name="password" label="Password" type={TextInputTypes.Password} id="login_password"></TextInput>
-            <button type="submit">Log In</button>
+            <SubmitButton text="Log In" />
         </Form>
     }
 
     return (
         <div className="LoginForm">
+            <h2 className="LoginForm__Title">Login</h2>
             <Formik component={form} initialValues={initialValues} onSubmit={submitHandler} />
         </div>
     );
