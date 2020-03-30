@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
+import './ApiErrorMessage.css'
 
 type ApiErrorMessageProps = {
     error?: ApiError,

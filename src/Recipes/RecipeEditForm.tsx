@@ -1,19 +1,42 @@
-import React, { ReactElement, useState, useEffect, useContext } from 'react'
-import { Formik, Form, FormikHelpers } from 'formik'
-import * as Yup from 'yup'
-import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
-import TextAreaInput from '../lib/Forms/TextAreaInput'
-import Recipes from '../Api/Recipes'
-import { useHistory, useParams } from 'react-router'
-import Recipe from '../Contracts/Recipe'
-import { NotificationContext } from '../Context'
-import { NotificationActionType, NotificationLevel } from '../lib/Notifications/useNotifications'
-import { RestResponse, ApiError } from '../lib/Api/RestResponse'
-import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
-import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
-import { RequestError } from '../Api/RequestError'
-import parseRequestError from '../Api/parseRequestError'
-import { SubmitButton, LinkButton } from '../lib/Buttons/Buttons'
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
+import {
+  Form,
+  Formik,
+  FormikHelpers,
+} from 'formik';
+import {
+  useHistory,
+  useParams,
+} from 'react-router';
+import * as Yup from 'yup';
+
+import parseRequestError from '../Api/parseRequestError';
+import Recipes from '../Api/Recipes';
+import { RequestError } from '../Api/RequestError';
+import { NotificationContext } from '../Context';
+import Recipe from '../Contracts/Recipe';
+import ApiErrorMessage from '../lib/Api/ApiErrorMessage';
+import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage';
+import {
+  ApiError,
+  RestResponse,
+} from '../lib/Api/RestResponse';
+import {
+  LinkButton,
+  SubmitButton,
+} from '../lib/Buttons/Buttons';
+import TextAreaInput from '../lib/Forms/TextAreaInput';
+import TextInput, { TextInputTypes } from '../lib/Forms/TextInput';
+import {
+  NotificationActionType,
+  NotificationLevel,
+} from '../lib/Notifications/useNotifications';
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
@@ -96,6 +119,7 @@ export default function EditRecipeForm(): ReactElement {
             .then((res: RestResponse<Recipe>) => {
                 // Complete submission before redirecting using history API, don't be tempted to use finally()
                 actions.setSubmitting(false)
+                setIsLoading(false)
 
                 // Dispatch a notification
                 dispatch({
@@ -116,8 +140,8 @@ export default function EditRecipeForm(): ReactElement {
                     actions.setErrors(apiError.errors)
                 }
                 actions.setSubmitting(false)
+                setIsLoading(false)
             })
-            .finally(() => setIsLoading(false))
     }
 
     const initialValues = {

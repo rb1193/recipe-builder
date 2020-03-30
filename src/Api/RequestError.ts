@@ -12,6 +12,6 @@ export class RequestError extends Error {
     public getError(): ApiError 
     {
         this.res.json().then((res: RestResponse<ApiError>) => this.error = res.data)
-        return this.error || { message: 'Unknown error' }
+        return this.error || { message: this.res.statusText }
     }
 }
