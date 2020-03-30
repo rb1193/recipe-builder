@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import PaneSlider from './lib/PaneSlider';
 import LoginForm from './Auth/LoginForm';
-import RegisterForm from './Auth/RegisterFormContainer';
 import Auth from './Api/Auth';
 import { UserContext, NotificationContext } from './Context';
 import RecipeSearchScreen from './Recipes/RecipeSearchScreen';
@@ -28,13 +26,6 @@ function App() {
         });
     }, [])
 
-    const auth = <PaneSlider panes={[
-        {label: 'Login', component: <LoginForm/>},
-        {label: 'Register', component: <RegisterForm />}
-    ]} />
-
-    const recipes = <RecipeSearchScreen />
-
     return (
         <div className="App">
             <NotificationContext.Provider value={initialNotificationContext}>
@@ -49,7 +40,7 @@ function App() {
                     <main className="App__Container">
                         <Switch>
                             <Route exact path='/'>
-                                {user ? recipes : auth}
+                                {user ? <RecipeSearchScreen /> : <LoginForm/>}
                             </Route>
                             <Route exact path='/recipes/create'>
                                 <RecipeCreateForm />
