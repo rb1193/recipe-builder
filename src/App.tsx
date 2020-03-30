@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import Auth from './Api/Auth';
+import GuardedRoute from './Auth/GuardedRoute';
 import LoginForm from './Auth/LoginForm';
 import LogoutButton from './Auth/LogoutButton';
 import {
@@ -67,15 +68,15 @@ function App() {
                             <Route exact path="/">
                                 {user ? <RecipeSearchScreen /> : <LoginForm />}
                             </Route>
-                            <Route exact path="/recipes/create">
+                            <GuardedRoute exact path="/recipes/create" user={user}>
                                 <RecipeCreateForm />
-                            </Route>
-                            <Route exact path="/recipes/:recipeId/edit">
+                            </GuardedRoute>
+                            <GuardedRoute exact path="/recipes/:recipeId/edit" user={user}>
                                 <RecipeEditForm />
-                            </Route>
-                            <Route path="/recipes/:recipeId">
+                            </GuardedRoute>
+                            <GuardedRoute path="/recipes/:recipeId" user={user}>
                                 <RecipeFull />
-                            </Route>
+                            </GuardedRoute>
                         </Switch>
                     </main>
                 </UserContext.Provider>
