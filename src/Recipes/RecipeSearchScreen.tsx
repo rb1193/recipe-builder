@@ -1,4 +1,4 @@
-import React, { useRef, FormEvent } from 'react'
+import React, { useRef, FormEvent, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
@@ -22,13 +22,25 @@ export default function RecipeSearchScreen() {
     const { isLoading, error, items, config, load } = usePagination<Recipe>(Recipes.search)
     const queryValue = useRef<HTMLInputElement>(null)
 
-    history.listen((location) => {
-        const values: QueryState = qs.parse(location.search.slice(1))
-        load({
-            query: values.query || '',
-            page: values.page || '1',
+    useEffect(() => {
+        const unregister = history.listen((location) => {
+            // Do not attempt to load data if user has left this screen
+            if (location.pathname !== '/') {
+                return
+            }
+    
+            const values: QueryState = qs.parse(location.search.slice(1))
+            load({
+                query: values.query || '',
+                page: values.page || '1',
+            })
         })
-    })
+
+        return () => {
+            unregister()
+        }
+    }, [history, load])
+    
     
     function searchSubmitHandler(event: FormEvent): void {
         event.preventDefault()
