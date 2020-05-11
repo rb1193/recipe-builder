@@ -59,13 +59,16 @@ export default function RecipeFull(): ReactElement
             <ApiErrorMessage error={error} />
             {recipe && 
                 <>
-                    <h1 className="RecipeFull__Name">{recipe?.name}</h1>
-                    <p>Cooking time: {recipe?.cooking_time}</p>
-                    <p>{recipe?.description}</p>
+                    <h1 className="RecipeFull__Name">{recipe.name}</h1>
+                    <p>Cooking time: {recipe.cooking_time}</p>
+                    <p>{recipe.description}</p>
                     <h2>Method</h2>
-                    <p>{recipe?.method}</p>
+                    <p>{recipe.method}</p>
                     <h2>Ingredients</h2>
-                    <p>{recipe?.ingredients}</p>
+                    <p>{recipe.ingredients}</p>
+                    {recipe.url &&
+                        <p><a href={recipe.url}>View online</a></p>
+                    }
                     <LinkButton to={`${location.pathname}/edit`} text="Edit" />
                     <ConfirmationModal
                         confirmationMessage="Are you sure you want to delete this recipe?"

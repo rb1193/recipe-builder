@@ -82,6 +82,9 @@ export default function EditRecipeForm(): ReactElement {
         ingredients: Yup.string()
             .required()
             .label('Ingredients'),
+        url: Yup.string()
+            .url()
+            .label('Link')
     })
 
     function form() {
@@ -100,6 +103,7 @@ export default function EditRecipeForm(): ReactElement {
                     name="cooking_time"
                     label="Cooking Time (Minutes)"
                 />
+                <TextInput type={TextInputTypes.Text} name="url" label="Link"/>
                 <SubmitButton text="Save Changes" />
             </Form>
         )

@@ -27,6 +27,7 @@ export default function CreateRecipeForm(): ReactElement {
         method: '',
         cooking_time: 0,
         ingredients: '',
+        url: ''
     }
 
     const validationSchema = Yup.object().shape({
@@ -47,6 +48,9 @@ export default function CreateRecipeForm(): ReactElement {
         ingredients: Yup.string()
             .required()
             .label('Ingredients'),
+        url: Yup.string()
+            .url()
+            .label('Link')
     })
 
     function form() {
@@ -65,6 +69,7 @@ export default function CreateRecipeForm(): ReactElement {
                     name="cooking_time"
                     label="Cooking Time (Minutes)"
                 />
+                <TextInput type={TextInputTypes.Text} name="url" label="Link" />
                 <SubmitButton text="Create Recipe" />
             </Form>
         )

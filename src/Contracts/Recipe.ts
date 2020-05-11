@@ -5,4 +5,5 @@ export default interface Recipe {
     method: string,
     cooking_time: number,
     ingredients: string,
+    url?: string
 }
