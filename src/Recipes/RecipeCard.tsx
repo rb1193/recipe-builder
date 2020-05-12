@@ -13,7 +13,7 @@ export default function RecipeCard(props: RecipeCardProps): ReactElement {
         <li className="RecipeCard">
             <h2 className="RecipeCard__Title">{recipe.name}</h2>
             <p>{recipe.description}</p>
-            <p>Cooking time: {recipe.cooking_time} minutes</p>
+            {recipe.cooking_time && <p>Cooking time: {recipe.cooking_time} minutes</p>}
             <LinkButton to={`/recipes/${recipe.id}`} text="View full recipe" />
         </li>
     )

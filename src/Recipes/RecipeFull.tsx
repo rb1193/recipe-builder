@@ -60,7 +60,7 @@ export default function RecipeFull(): ReactElement
             {recipe && 
                 <>
                     <h1 className="RecipeFull__Name">{recipe.name}</h1>
-                    <p>Cooking time: {recipe.cooking_time}</p>
+                    {recipe.cooking_time && <p>Cooking time: {recipe.cooking_time}</p>}
                     <p>{recipe.description}</p>
                     <h2>Method</h2>
                     <p>{recipe.method}</p>

@@ -3,7 +3,7 @@ export default interface Recipe {
     name: string,
     description: string,
     method: string,
-    cooking_time: number,
+    cooking_time?: number,
     ingredients: string,
     url?: string
 }
