@@ -26,6 +26,7 @@ import RecipeCreateForm from './Recipes/RecipeCreateForm';
 import RecipeEditForm from './Recipes/RecipeEditForm';
 import RecipeFull from './Recipes/RecipeFull';
 import RecipeSearchScreen from './Recipes/RecipeSearchScreen';
+import RecipeFromUrlForm from './Recipes/RecipeFromUrlForm';
 
 function App() {
     const [user, setUser] = useState<User | null>(null)
@@ -68,6 +69,9 @@ function App() {
                             </Route>
                             <GuardedRoute exact path="/recipes/create" user={user}>
                                 <RecipeCreateForm />
+                            </GuardedRoute>
+                            <GuardedRoute exact path="/recipes/create-from-url" user={user}>
+                                <RecipeFromUrlForm />
                             </GuardedRoute>
                             <GuardedRoute exact path="/recipes/:recipeId/edit" user={user}>
                                 <RecipeEditForm />

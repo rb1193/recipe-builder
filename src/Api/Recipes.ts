@@ -8,6 +8,14 @@ type SearchValues = {
 }
 
 const Recipes = {
+    scrape: (values: { url: string }): Request => {
+        const options: RequestInit = {
+            ...defaultRequestOptions,
+            method: 'POST',
+            body: JSON.stringify(values)
+        }
+        return new Request(`${process.env.REACT_APP_API_URL}/recipes/scrape`, options)
+    },
     search: (values: SearchValues): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,

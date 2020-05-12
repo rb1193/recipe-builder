@@ -111,6 +111,7 @@ export default function CreateRecipeForm(): ReactElement {
     return (
         <>
             <LinkButton to="/" text="Back To Search" />
+            <LinkButton to="/recipes/create-from-url" text="Add from the web" />
             <h2>Add a New Recipe</h2>
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
