@@ -80,14 +80,16 @@ export default function RecipeFromUrlForm(): React.ReactElement {
             <LinkButton to="/" text="Back To Search" />
             <LinkButton to="/recipes/create" text="Add Manually" />
             <h2>Add a New Recipe from the Web</h2>
-            <ApiLoadingMessage isLoading={isLoading} />
+            <ApiLoadingMessage isLoading={isLoading} message="Fetching data..."/>
             <ApiErrorMessage error={error} />
-            <Formik
-                component={form}
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                validationSchema={validationSchema}
-            />
+            {!isLoading && 
+                <Formik
+                    component={form}
+                    initialValues={initialValues}
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}
+                />
+            }
         </>
     )
 }
