@@ -82,20 +82,23 @@ export default function CreateRecipeForm(): ReactElement {
         setIsLoading(true)
         fetch(Recipes.store(values))
             .then((res: Response) => {
-                if (!res.ok) throw new RequestError(res)
-                return res.json()
+                return Promise.all<Response, RestResponse<Recipe | ApiError>>([res, res.json()])
             })
-            .then((res: RestResponse<Recipe>) => {
+            .then(([res, resJson]) => {
+                if (!res.ok) {
+                    throw new RequestError(resJson as RestResponse<ApiError>)
+                }
+                const data = resJson.data as Recipe
                 // Complete submission before redirecting using history API, don't be tempted to use finally()
                 actions.setSubmitting(false)
                 dispatch({
                     type: NotificationActionType.ADD,
                     payload: {
-                        message: `${res.data.name} created successfully`,
+                        message: `${data.name} created successfully`,
                         level: NotificationLevel.info,
                     },
                 })
-                history.push('/recipes/' + res.data.id)
+                history.push('/recipes/' + data.id)
             })
             .catch((err) => {
                 const apiError = parseRequestError(err)

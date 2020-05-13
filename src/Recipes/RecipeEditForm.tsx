@@ -52,11 +52,13 @@ export default function EditRecipeForm(): ReactElement {
         setIsLoading(true)
         fetch(Recipes.one(recipeId || ''))
             .then(res => {
-                if (!res.ok) throw new RequestError(res)
-                return res.json()
+                return Promise.all<Response, RestResponse<Recipe | ApiError>>([res, res.json()])
             })
-            .then((res: RestResponse<Recipe>) => {
-                setRecipe(res.data)
+            .then(([res, resJson]) => {
+                if (!res.ok) {
+                    throw new RequestError(resJson as RestResponse<ApiError>)
+                }
+                setRecipe(resJson.data as Recipe)
             })
             .catch((err) => {
                 setError(parseRequestError(err))
@@ -117,10 +119,13 @@ export default function EditRecipeForm(): ReactElement {
         setIsLoading(true)
         fetch(Recipes.update(recipeId, values))
             .then((res) => {
-                if (!res.ok) throw new RequestError(res)
-                return res.json()
+                return Promise.all<Response, RestResponse<Recipe | ApiError>>([res, res.json()])
             })
-            .then((res: RestResponse<Recipe>) => {
+            .then(([res, resJson]) => {
+                if (!res.ok) {
+                    throw new RequestError(resJson as RestResponse<ApiError>)
+                }
+                const data = resJson.data as Recipe
                 // Complete submission before redirecting using history API, don't be tempted to use finally()
                 actions.setSubmitting(false)
                 setIsLoading(false)
@@ -129,13 +134,13 @@ export default function EditRecipeForm(): ReactElement {
                 dispatch({
                     type: NotificationActionType.ADD,
                     payload: {
-                        message: `${res.data.name} updated successfully`,
+                        message: `${data.name} updated successfully`,
                         level: NotificationLevel.info,
                     },
                 })
 
                 // Redirect to recipe page
-                history.push('/recipes/' + res.data.id)
+                history.push('/recipes/' + data.id)
             })
             .catch((err) => {
                 const apiError = parseRequestError(err)

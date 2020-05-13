@@ -1,0 +1,5 @@
+.RecipeFull__Method,
+.RecipeFull__Ingredients
+{
+    white-space: pre-wrap;
+}

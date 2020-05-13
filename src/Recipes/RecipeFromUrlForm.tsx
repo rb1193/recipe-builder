@@ -49,20 +49,24 @@ export default function RecipeFromUrlForm(): React.ReactElement {
         setIsLoading(true)
         fetch(Recipes.scrape(values))
             .then((res: Response) => {
-                if (!res.ok) throw new RequestError(res)
-                return res.json()
+                return Promise.all<Response, RestResponse<Recipe | ApiError>>([res, res.json()])
             })
-            .then((res: RestResponse<Recipe>) => {
+            .then(([res, resJson]) => {
+                if (!res.ok) {
+                    throw new RequestError(resJson as RestResponse<ApiError>)
+                }
+                const data = resJson.data as Recipe
                 // Complete submission before redirecting using history API, don't be tempted to use finally()
                 actions.setSubmitting(false)
+                setIsLoading(false)
                 dispatch({
                     type: NotificationActionType.ADD,
                     payload: {
-                        message: `${res.data.name} created successfully`,
+                        message: `${data.name} created successfully`,
                         level: NotificationLevel.info,
                     },
                 })
-                history.push('/recipes/' + res.data.id)
+                history.push('/recipes/' + data.id)
             })
             .catch((err) => {
                 const apiError = parseRequestError(err)
@@ -82,14 +86,12 @@ export default function RecipeFromUrlForm(): React.ReactElement {
             <h2>Add a New Recipe from the Web</h2>
             <ApiLoadingMessage isLoading={isLoading} message="Fetching data..."/>
             <ApiErrorMessage error={error} />
-            {!isLoading && 
-                <Formik
-                    component={form}
-                    initialValues={initialValues}
-                    onSubmit={handleSubmit}
-                    validationSchema={validationSchema}
-                />
-            }
+            <Formik
+                component={form}
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validationSchema={validationSchema}
+            />
         </>
     )
 }
