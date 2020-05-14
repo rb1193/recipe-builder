@@ -49,6 +49,8 @@ export default function CreateRecipeForm(): ReactElement {
             .required()
             .label('Ingredients'),
         url: Yup.string()
+            .notRequired()
+            .nullable()
             .url()
             .label('Link')
     })

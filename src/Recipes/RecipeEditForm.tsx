@@ -85,6 +85,8 @@ export default function EditRecipeForm(): ReactElement {
             .required()
             .label('Ingredients'),
         url: Yup.string()
+            .notRequired()
+            .nullable()
             .url()
             .label('Link')
     })
@@ -153,12 +155,13 @@ export default function EditRecipeForm(): ReactElement {
             })
     }
 
-    const initialValues = {
+    const initialValues: Omit<Recipe, 'id'> = {
         name: recipe?.name || '',
         description: recipe?.description || '',
         cooking_time: recipe?.cooking_time || 0,
         method: recipe?.method || '',
         ingredients: recipe?.ingredients || '',
+        url: recipe?.url
     }
 
     return (
