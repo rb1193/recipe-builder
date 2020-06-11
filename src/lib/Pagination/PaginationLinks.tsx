@@ -16,7 +16,7 @@ interface PaginationLinksProps {
 export default function PaginationLinks(props: PaginationLinksProps): ReactElement {
     const { links, meta } = props
     const location = useLocation()
-    const query = new URLSearchParams(location.search).get('query')
+    const params = Object.fromEntries(new URLSearchParams(location.search))
 
     const first = Math.max(1, meta.current_page - Math.floor(links / 2))
     const last = Math.min(meta.current_page + Math.floor(links/ 2), meta.last_page)
@@ -26,8 +26,8 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
             'PaginationLinks__Link--Active': meta.current_page === pageNumber
         })
         const url = location.pathname + '?' + qs.stringify({
+            ...params,
             page: pageNumber,
-            query: query,
         })
 
         return <Link

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import {
     ApiError,
     PaginatedRestResponse,
@@ -9,7 +9,7 @@ import { RequestError } from '../../Api/RequestError'
 
 type requestFn = (params: any) => Request
 
-export default function usePagination<T>(requestFn: requestFn) {
+export function usePagination<T>(requestFn: requestFn) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<ApiError>()
     const [items, setItems] = useState<T[]>([])
@@ -19,7 +19,7 @@ export default function usePagination<T>(requestFn: requestFn) {
         per_page: 20,
     })
 
-    const load = (params: any) => {
+    const load = useCallback((params: any) => {
         setIsLoading(true)
         fetch(requestFn(params))
             .then((res: Response) => {
@@ -39,7 +39,7 @@ export default function usePagination<T>(requestFn: requestFn) {
             .finally(() => {
                 setIsLoading(false)
             })
-    }
+    }, [requestFn])
 
     return { isLoading, error, items, config, load }
 }

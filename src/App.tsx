@@ -25,6 +25,7 @@ import useNotifications from './lib/Notifications/useNotifications';
 import RecipeCreateForm from './Recipes/RecipeCreateForm';
 import RecipeEditForm from './Recipes/RecipeEditForm';
 import RecipeFull from './Recipes/RecipeFull';
+import RecipeListScreen from './Recipes/RecipeListScreen';
 import RecipeSearchScreen from './Recipes/RecipeSearchScreen';
 import RecipeFromUrlForm from './Recipes/RecipeFromUrlForm';
 
@@ -53,8 +54,16 @@ function App() {
                             <>
                                 <nav className="App__Menu">
                                     <LinkButton
+                                        to="/"
+                                        text="Search Recipes"
+                                    />
+                                    <LinkButton
                                         to="/recipes/create"
                                         text="Add Recipe"
+                                    />
+                                    <LinkButton
+                                        to="/recipes/all"
+                                        text="All Recipes"
                                     />
                                     <LogoutButton />
                                 </nav>
@@ -67,6 +76,9 @@ function App() {
                             <Route exact path="/">
                                 {user ? <RecipeSearchScreen /> : <LoginForm />}
                             </Route>
+                            <GuardedRoute exact path="/recipes/all" user={user}>
+                                <RecipeListScreen />
+                            </GuardedRoute>
                             <GuardedRoute exact path="/recipes/create" user={user}>
                                 <RecipeCreateForm />
                             </GuardedRoute>
