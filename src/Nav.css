@@ -1,0 +1,30 @@
+.Nav {
+    width: 100%;
+}
+
+.Nav__Item {
+    display: block;
+    border-bottom: 1px solid var(--color-grey);
+}
+
+.Nav__Item > a, .Nav__Item > button {
+    display: block;
+    width: 100%;
+}
+
+@media screen and (min-width: 720px) {
+    .Nav {
+        text-align: right;
+    }
+
+    .Nav__Item {
+        border-bottom: none;
+        display: inline-block;
+    }
+
+    .Nav__Item > a, .Nav__Item > button {
+        display: inline-block;
+        width: auto;
+    }
+    
+}

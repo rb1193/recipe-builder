@@ -18,11 +18,6 @@
     text-align: center;
 }
 
-.App__Menu {
-    width: 100%;
-    text-align: right;
-}
-
 .App__Container {
     max-width: 90vw;
     margin: auto;

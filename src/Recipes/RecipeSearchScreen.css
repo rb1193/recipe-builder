@@ -1,13 +1,29 @@
-.RecipeSearchScreen__Form {
-    display: flex;
-}
-
 .RecipeSearchScreen__SearchInput {
     border: none;
     color: var(--color-grey-dark);
-    display: inline-block;
-    flex-grow: 1;
+    display: block;
     font-size: calc(10px + 1.2vh);
     line-height: calc(12px + 1.3vh);
     padding: 12px;
+    width: 100%;
+}
+
+.RecipeSearchScreen__Form > .Button {
+    display: block;
+    width: 100%;
+}
+
+
+@media screen and (min-width: 720px) {
+    .RecipeSearchScreen__Form {
+        display: flex;
+    }
+
+    .RecipeSearchScreen__SearchInput {
+        flex-grow: 3;
+    }
+
+    .RecipeSearchScreen__Form > .Button {
+        flex-shrink: 3;
+    }
 }

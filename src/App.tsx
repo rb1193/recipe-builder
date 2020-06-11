@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, {
-  useEffect,
+  useLayoutEffect,
   useState,
 } from 'react';
 
@@ -13,13 +13,13 @@ import {
 import Auth from './Api/Auth';
 import GuardedRoute from './Auth/GuardedRoute';
 import LoginForm from './Auth/LoginForm';
-import LogoutButton from './Auth/LogoutButton';
+import Nav from './Nav';
+
 import {
   NotificationContext,
   UserContext,
 } from './Context';
 import User from './Contracts/User';
-import { LinkButton } from './lib/Buttons/Buttons';
 import NotificationBanner from './lib/Notifications/NotificationBanner';
 import useNotifications from './lib/Notifications/useNotifications';
 import RecipeCreateForm from './Recipes/RecipeCreateForm';
@@ -34,7 +34,7 @@ function App() {
     const [notifications, dispatch] = useNotifications()
     const initialNotificationContext = { dispatch }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         Auth.user()
             .then(res => {
                 setUser(res.data)
@@ -50,25 +50,7 @@ function App() {
                 <UserContext.Provider value={{ user: user, setUser: setUser }}>
                     <header className="App__Header">
                         <h1>My Recipe Library</h1>
-                        {user && (
-                            <>
-                                <nav className="App__Menu">
-                                    <LinkButton
-                                        to="/"
-                                        text="Search Recipes"
-                                    />
-                                    <LinkButton
-                                        to="/recipes/create"
-                                        text="Add Recipe"
-                                    />
-                                    <LinkButton
-                                        to="/recipes/all"
-                                        text="All Recipes"
-                                    />
-                                    <LogoutButton />
-                                </nav>
-                            </>
-                        )}
+                        {user && <Nav/>}
                     </header>
                     <NotificationBanner notifications={notifications} />
                     <main className="App__Container">
