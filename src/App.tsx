@@ -39,7 +39,7 @@ function App() {
             .then(res => {
                 setUser(res.data)
             })
-            .catch(() => {
+            .catch((err) => {
                 setUser(null)
             })
     }, [])

@@ -48,6 +48,8 @@
   },
   "devDependencies": {
     "@types/ramda": "github:types/npm-ramda#dist",
-    "@types/react-router-dom": "^5.1.3"
+    "@types/react-router-dom": "^5.1.3",
+    "cypress": "4.7.0",
+    "miragejs": "^0.1.40"
   }
 }
