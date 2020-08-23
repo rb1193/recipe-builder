@@ -17,6 +17,7 @@ describe('The app', () => {
         cy.visit('/')
         cy.contains('Login')
         cy.get('.LoginForm').toMatchImageSnapshot()
+        cy.percySnapshot('login page', { widths: [768, 992, 1200] });
     })
 
     it('displays recipes search page if the user is authenticated', () => {
@@ -26,5 +27,6 @@ describe('The app', () => {
         })
         cy.visit('/')
         cy.contains('Search recipes')
+        cy.percySnapshot('search page', { widths: [768, 992, 1200] });
     })
 })
