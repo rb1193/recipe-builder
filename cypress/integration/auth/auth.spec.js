@@ -16,7 +16,7 @@ describe('The app', () => {
     it('displays the login form if the user is not authenticated', () => {
         cy.visit('/')
         cy.contains('Login')
-        cy.get('.LoginForm').toMatchImageSnapshot()
+        //cy.get('.LoginForm').toMatchImageSnapshot()
         cy.percySnapshot('login page', { widths: [768, 992, 1200] });
     })
 
