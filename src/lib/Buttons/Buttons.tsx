@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import './Buttons.css'
 
@@ -8,7 +9,7 @@ export function ActionButton(props: {text: string, onClick: (event: React.MouseE
 
 export function SubmitButton(props: {text: string}): React.ReactElement
 {
-    return (<button className="Button Button--Submit Button--Primary" type="submit">{props.text}</button>)
+    return (<Button colorScheme="teal" type="submit">{props.text}</Button>)
 }
 
 export function LinkButton(props: {to: string, text: string}): React.ReactElement

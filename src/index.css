@@ -18,35 +18,11 @@
 }
 
 body {
-    color: #333;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Helevtics Neue',
-        'Helvetica', 'sans-serif';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-textarea {
-    font-family: -apple-system, BlinkMacSystemFont, 'Helevtics Neue',
-        'Helvetica', 'sans-serif';
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: -apple-system, BlinkMacSystemFont, 'PT Serif',
-        'Times New Roman', 'serif';
-}
-
-h2 {
-    font-size: calc(10px + 2vh);
-    line-height: calc(12px + 2.2vh);
 }

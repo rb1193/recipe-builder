@@ -6,6 +6,7 @@ import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
 import { UserContext } from '../Context';
 import './LoginForm.css'
 import { SubmitButton } from '../lib/Buttons/Buttons';
+import { Box, Heading, VStack } from '@chakra-ui/layout';
 
 export interface LoginFormValues extends FormikValues {
     email: string,
@@ -33,17 +34,18 @@ function LoginForm(): ReactElement {
 
     function form() {
         return <Form noValidate>
-            <TextInput name="email" label="Email" type={TextInputTypes.Email} id="login_email"></TextInput>
-            <TextInput name="password" label="Password" type={TextInputTypes.Password} id="login_password"></TextInput>
-            <SubmitButton text="Log In" />
+            <VStack spacing="8">
+                <TextInput name="email" label="Email" type={TextInputTypes.Email} id="login_email"></TextInput>
+                <TextInput name="password" label="Password" type={TextInputTypes.Password} id="login_password"></TextInput>
+                <SubmitButton text="Log In" />
+            </VStack>
         </Form>
     }
 
     return (
-        <div className="LoginForm">
-            <h2 className="LoginForm__Title">Login</h2>
+        <Box p="8">
             <Formik component={form} initialValues={initialValues} onSubmit={submitHandler} />
-        </div>
+        </Box>
     );
 }
 

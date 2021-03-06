@@ -10,6 +10,9 @@ import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs from 'qs'
 import './RecipeSearchScreen.css'
 import { SubmitButton } from '../lib/Buttons/Buttons'
+import { Input } from '@chakra-ui/input'
+import { FormControl } from '@chakra-ui/form-control'
+import { Container, VStack } from '@chakra-ui/layout'
 
 type QueryState = {
     query?: string
@@ -48,29 +51,31 @@ export default function RecipeSearchScreen() {
     }
 
     return (
-        <div className="RecipeSearchScreen">
+        <Container>
             <form
                 noValidate
                 className="RecipeSearchScreen__Form"
                 onSubmit={searchSubmitHandler}
             >
-                <input
-                    aria-label="Recipe search input"
-                    autoComplete="off"
-                    className="RecipeSearchScreen__SearchInput"
-                    type="search"
-                    name="query"
-                    defaultValue={''}
-                    ref={queryValue}
-                    id="RecipeSearch_QueryInput"
-                    placeholder="Enter some ingredients..."
-                />
-                <SubmitButton text="Search recipes" />
+                <VStack my="8" spacing="8">
+                    <FormControl id="RecipeSearch_QueryInput">
+                        <Input
+                            aria-label="Recipe search input"
+                            autoComplete="off"
+                            type="search"
+                            name="query"
+                            defaultValue={''}
+                            ref={queryValue}
+                            placeholder="Enter some ingredients..."
+                        />
+                    </FormControl>
+                    <SubmitButton text="Search recipes" />
+                </VStack>
             </form>
             <ApiErrorMessage error={error} />
             <ApiLoadingMessage isLoading={isLoading} />
             <RecipeCardList isLoading={isLoading} recipes={items} />
             <PaginationLinks meta={config} links={5} includeEnds={false} />
-        </div>
+        </Container>
     )
 }

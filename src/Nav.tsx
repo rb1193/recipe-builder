@@ -5,7 +5,7 @@ import './Nav.css'
 
 export default function Nav(): React.ReactElement {
     return (
-        <nav className="Nav Nav--Main">
+        <nav>
             <div className="Nav__Item">
                 <LinkButton to="/" text="Search Recipes" />
             </div>

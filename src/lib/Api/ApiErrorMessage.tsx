@@ -1,6 +1,7 @@
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from '@chakra-ui/alert'
+import { CloseButton } from '@chakra-ui/close-button'
 import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
-import './ApiErrorMessage.css'
 
 type ApiErrorMessageProps = {
     error?: ApiError,
@@ -16,10 +17,11 @@ export default function ApiErrorMessage(props: ApiErrorMessageProps): ReactEleme
         })
 
         return (
-            <div className="ApiErrorMessage">
-                <p>{error.message}</p>
-                {list && <ul>{list}</ul>}
-            </div>
+            <Alert status="error">
+                <AlertIcon />
+                <AlertTitle mr="2">{error.message}</AlertTitle>
+                <AlertDescription>{list && <ul>{list}</ul>}</AlertDescription>
+            </Alert>
         )
     }
 
