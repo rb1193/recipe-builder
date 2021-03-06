@@ -51,7 +51,7 @@ export default function RecipeSearchScreen() {
     }
 
     return (
-        <Container>
+        <>
             <form
                 noValidate
                 className="RecipeSearchScreen__Form"
@@ -76,6 +76,6 @@ export default function RecipeSearchScreen() {
             <ApiLoadingMessage isLoading={isLoading} />
             <RecipeCardList isLoading={isLoading} recipes={items} />
             <PaginationLinks meta={config} links={5} includeEnds={false} />
-        </Container>
+        </>
     )
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './Buttons.css'
 
 export function ActionButton(props: {text: string, onClick: (event: React.MouseEvent<HTMLButtonElement>) => void}) {
-    return (<button className="Button Button--Action Button--Primary" type="button" onClick={props.onClick}>{props.text}</button>)
+    return (<Button colorScheme="teal" type="button" onClick={props.onClick}>{props.text}</Button>)
 }
 
 export function SubmitButton(props: {text: string}): React.ReactElement

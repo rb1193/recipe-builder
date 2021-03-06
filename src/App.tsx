@@ -1,13 +1,13 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useMemo, useState } from 'react'
 
 import { Route, Switch } from 'react-router-dom'
 
-import { Box, Center, Container, Heading, Text } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, useMediaQuery } from '@chakra-ui/react'
 
 import Auth from './Api/Auth'
 import GuardedRoute from './Auth/GuardedRoute'
 import LoginForm from './Auth/LoginForm'
-import Nav from './Nav'
+import MobileNav from './MobileNav'
 
 import { NotificationContext, UserContext } from './Context'
 import User from './Contracts/User'
@@ -19,8 +19,10 @@ import RecipeFull from './Recipes/RecipeFull'
 import RecipeListScreen from './Recipes/RecipeListScreen'
 import RecipeSearchScreen from './Recipes/RecipeSearchScreen'
 import RecipeFromUrlForm from './Recipes/RecipeFromUrlForm'
+import DesktopNav from './DesktopNav'
 
 function App() {
+  const [isMobile] = useMediaQuery('(max-width: 768px)')
   const [user, setUser] = useState<User | null>(null)
   const [notifications, dispatch] = useNotifications()
   const initialNotificationContext = { dispatch }
@@ -35,17 +37,32 @@ function App() {
       })
   }, [])
 
+  const nav = useMemo(() => {
+    return isMobile ? <MobileNav /> : <DesktopNav />
+  }, [isMobile])
+
   return (
     <NotificationContext.Provider value={initialNotificationContext}>
       <UserContext.Provider value={{ user: user, setUser: setUser }}>
         <Box as="header">
-          <Heading as="h1" size="2xl" my="8" textAlign="center" lineHeight="shorter">
-            My Recipe Library
-          </Heading>
-          {user && <Nav />}
+          {user ? (
+            nav
+          ) : (
+            <Container>
+              <Heading
+                as="h1"
+                size="2xl"
+                my="8"
+                textAlign="center"
+                lineHeight="shorter"
+              >
+                My Recipe Library
+              </Heading>
+            </Container>
+          )}
         </Box>
         <NotificationBanner notifications={notifications} />
-        <Container as="main">
+        <Container as="main" centerContent={true}>
           <Switch>
             <Route exact path="/">
               {user ? <RecipeSearchScreen /> : <LoginForm />}
@@ -67,9 +84,11 @@ function App() {
             </GuardedRoute>
           </Switch>
         </Container>
-        {!user && <Text as="footer" my="8" textAlign="center">
-          Made by Ryan
-        </Text>}
+        {!user && (
+          <Text as="footer" my="8" textAlign="center">
+            Made by Ryan
+          </Text>
+        )}
       </UserContext.Provider>
     </NotificationContext.Provider>
   )

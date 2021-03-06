@@ -1,5 +1,4 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle } from '@chakra-ui/alert'
-import { CloseButton } from '@chakra-ui/close-button'
 import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
 
@@ -7,7 +6,7 @@ type ApiErrorMessageProps = {
     error?: ApiError,
 }
 
-export default function ApiErrorMessage(props: ApiErrorMessageProps): ReactElement
+export default function ApiErrorMessage(props: ApiErrorMessageProps): ReactElement | null
 {
     const { error } = props
 
@@ -25,5 +24,5 @@ export default function ApiErrorMessage(props: ApiErrorMessageProps): ReactEleme
         )
     }
 
-    return (<></>)
+    return null
 }

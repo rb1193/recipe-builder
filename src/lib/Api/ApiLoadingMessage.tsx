@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/layout';
 import React, { ReactElement } from 'react'
 
 type ApiErrorMessageProps = {
@@ -5,17 +6,15 @@ type ApiErrorMessageProps = {
     message?: string
 }
 
-export default function ApiLoadingMessage(props: ApiErrorMessageProps): ReactElement
+export default function ApiLoadingMessage(props: ApiErrorMessageProps): ReactElement | null
 {
     const { isLoading, message } = props
 
     if (isLoading) {
         return (
-            <div className="ApiLoadingMessage">
-                <p>{message || 'Loading'}</p>
-            </div>
+            <Text>{message || 'Loading'}</Text>
         )
     }
 
-    return (<></>);
+    return null;
 }

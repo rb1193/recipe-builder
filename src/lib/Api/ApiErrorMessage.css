@@ -1,9 +1,0 @@
-.ApiErrorMessage
-{
-    background-color: #f8d7da;
-    color: red;
-    display: block;
-    margin-bottom: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    width: 100%;
-}

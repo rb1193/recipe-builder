@@ -4,9 +4,8 @@ import { Form, FormikValues, FormikHelpers, Formik } from 'formik';
 import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
 import { UserContext } from '../Context';
-import './LoginForm.css'
 import { SubmitButton } from '../lib/Buttons/Buttons';
-import { Box, Heading, VStack } from '@chakra-ui/layout';
+import { Box, VStack } from '@chakra-ui/layout';
 
 export interface LoginFormValues extends FormikValues {
     email: string,
