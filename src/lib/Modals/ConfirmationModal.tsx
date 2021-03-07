@@ -1,43 +1,36 @@
-import React, { useState } from 'react'
-import classNames from 'classnames'
-import './ConfirmationModal.css'
+import React from 'react'
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/modal'
+import { Button } from '@chakra-ui/button'
+import { Text } from '@chakra-ui/layout'
+import { useDisclosure } from '@chakra-ui/hooks'
 
 interface ConfirmationModalProps {
     confirmationMessage: string,
     onConfirm: () => void,
     buttonText: string,
-    buttonClass: string,
+    buttonColorScheme: string,
 }
 
 export default function ConfirmationModal(props: ConfirmationModalProps): React.ReactElement {
-    const { confirmationMessage, onConfirm, buttonText, buttonClass } = props
-    const [isOpen, setIsOpen] = useState(false)
-
-    const openModal = () => {
-        setIsOpen(true)
-    }
-
-    const closeModal = () => {
-        setIsOpen(false)
-    }
-
-    const modalClass = classNames('ConfirmationModal', {
-        'ConfirmationModal--Open': isOpen,
-    })
-
-    const overlayClass = classNames('ConfirmationModal__Overlay', {
-        'ConfirmationModal__Overlay--Active': isOpen,
-    })
+    const { confirmationMessage, onConfirm, buttonText, buttonColorScheme } = props
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
         <>
-            <button className={buttonClass} type="button" onClick={openModal}>{buttonText}</button>
-            <div className={overlayClass} onClick={closeModal} />
-            <div className={modalClass}>
-                <p className="ConfirmationModal__Message">{confirmationMessage}</p>
-                <button type="button" className="ConfirmationModal__Button ConfirmationModal__Button--Confirm" onClick={onConfirm}>Confirm</button>
-                <button type="button" className="ConfirmationModal__Button ConfirmationModal__Button--Cancel" onClick={closeModal}>Cancel</button>
-            </div>
+            <Button onClick={onOpen} colorScheme={buttonColorScheme}>{buttonText}</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>{confirmationMessage}</Text>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={onConfirm}>Confirm</Button>
+                        <Button variant="ghost" onClick={onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }

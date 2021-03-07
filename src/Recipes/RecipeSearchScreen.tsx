@@ -1,6 +1,5 @@
 import React, { useRef, FormEvent, useEffect } from 'react'
 import { useHistory } from 'react-router'
-import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
@@ -12,7 +11,7 @@ import './RecipeSearchScreen.css'
 import { SubmitButton } from '../lib/Buttons/Buttons'
 import { Input } from '@chakra-ui/input'
 import { FormControl } from '@chakra-ui/form-control'
-import { Container, VStack } from '@chakra-ui/layout'
+import { VStack } from '@chakra-ui/layout'
 
 type QueryState = {
     query?: string
@@ -69,11 +68,10 @@ export default function RecipeSearchScreen() {
                             placeholder="Enter some ingredients..."
                         />
                     </FormControl>
-                    <SubmitButton text="Search recipes" />
+                    <SubmitButton text="Search recipes" isLoading={isLoading} />
                 </VStack>
             </form>
             <ApiErrorMessage error={error} />
-            <ApiLoadingMessage isLoading={isLoading} />
             <RecipeCardList isLoading={isLoading} recipes={items} />
             <PaginationLinks meta={config} links={5} includeEnds={false} />
         </>

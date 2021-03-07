@@ -1,24 +1,25 @@
 import React, { useContext } from 'react'
-import { NotificationContext, UserContext } from '../Context'
-import { NotificationActionType, NotificationLevel } from '../lib/Notifications/useNotifications'
 import Auth from '../Api/Auth'
 import { ActionButton } from '../lib/Buttons/Buttons'
+import { useToast } from '@chakra-ui/toast'
+import { UserContext } from '../Context'
 
 export default function LogoutButton(): React.ReactElement {
     const { setUser } = useContext(UserContext)
-    const { dispatch } = useContext(NotificationContext)
+    const toast = useToast();
 
     const logout = async() => {
         try {
             await Auth.logout()
             setUser(null)
         } catch (error) {
-            dispatch({
-                type: NotificationActionType.ADD,
-                payload: {
-                    message: `Unable to reach server`,
-                    level: NotificationLevel.info,
-                },
+            toast({
+                title: "Log out failed.",
+                description: `Unable to reach server`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                position: 'top-left',
             })
         }
     }

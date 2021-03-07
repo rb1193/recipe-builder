@@ -1,6 +1,7 @@
 import React from "react";
 import { useField, FieldMetaProps, FieldInputProps, FieldHelperProps } from 'formik';
-import './TextAreaInput.css';
+import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
+import { Textarea } from "@chakra-ui/textarea";
 
 export interface TextAreaInputProps {
     label: string,
@@ -13,12 +14,10 @@ export default function TextAreaInput(props: TextAreaInputProps) {
     const [field, meta]: [FieldInputProps<any>, FieldMetaProps<any>, FieldHelperProps<any>] = useField(props);
 
     return (
-        <div className="TextAreaInput">
-            <label className="TextAreaInput__Label" htmlFor={name}>{label}</label>
-            <textarea {...field} className="TextAreaInput__Input" id={id || name}/>
-            {meta.touched && meta.error ? (
-                <div className='TextAreaInput__Errors'><span>{meta.error}</span></div>
-            ) : null}
-        </div>
+        <FormControl id={id} isInvalid={meta.touched && meta.error !== undefined}>
+            <FormLabel htmlFor={name}>{label}</FormLabel>
+            <Textarea {...field} id={id || name}/>
+            <FormErrorMessage>{meta.error}</FormErrorMessage>
+        </FormControl>
     );
 }

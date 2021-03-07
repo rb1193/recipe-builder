@@ -31,11 +31,12 @@
     "yup": "^0.28.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "integration-test": "percy exec -- cypress run"
+    "integration-test": "percy exec -- cypress run",
+    "prestart": "rm ./node_modules/webpack-dev-server/ssl/server.pem && cp -f ./certs/server.pem ./node_modules/webpack-dev-server/ssl"
   },
   "eslintConfig": {
     "extends": "react-app"

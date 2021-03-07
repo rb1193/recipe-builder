@@ -36,7 +36,7 @@ function LoginForm(): ReactElement {
             <VStack spacing="8">
                 <TextInput name="email" label="Email" type={TextInputTypes.Email} id="login_email"></TextInput>
                 <TextInput name="password" label="Password" type={TextInputTypes.Password} id="login_password"></TextInput>
-                <SubmitButton text="Log In" />
+                <SubmitButton text="Log In" isLoading={false} />
             </VStack>
         </Form>
     }

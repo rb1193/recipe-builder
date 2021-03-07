@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useContext } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 import { useParams, useLocation, useHistory } from 'react-router'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
@@ -7,20 +7,18 @@ import Recipes from '../Api/Recipes'
 import { RestResponse, ApiError } from '../lib/Api/RestResponse'
 import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
-import { NotificationContext } from '../Context'
-import {
-    NotificationActionType,
-    NotificationLevel,
-} from '../lib/Notifications/useNotifications'
 import ConfirmationModal from '../lib/Modals/ConfirmationModal'
 import { LinkButton } from '../lib/Buttons/Buttons'
 import './RecipeFull.css'
+import { Box, Heading, Text, VStack } from '@chakra-ui/layout'
+import { Button, ButtonGroup } from '@chakra-ui/button'
+import { useToast } from '@chakra-ui/toast'
 
 export default function RecipeFull(): ReactElement {
-    const { recipeId } = useParams()
+    const { recipeId } = useParams<{ recipeId?: string }>()
     const location = useLocation()
     const history = useHistory()
-    const { dispatch } = useContext(NotificationContext)
+    const toast = useToast()
 
     const [isLoading, setIsLoading] = useState(true)
     const [recipe, setRecipe] = useState<Recipe>()
@@ -48,12 +46,13 @@ export default function RecipeFull(): ReactElement {
         if (!recipe) return
         try {
             await fetch(Recipes.delete(recipe.id))
-            dispatch({
-                type: NotificationActionType.ADD,
-                payload: {
-                    message: `${recipe.name} deleted successfully`,
-                    level: NotificationLevel.info,
-                },
+            toast({
+                title: "Recipe deleted.",
+                description: `${recipe.name} deleted successfully`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+                position: 'top-left',
             })
             history.push('/')
         } catch (err) {
@@ -62,37 +61,38 @@ export default function RecipeFull(): ReactElement {
     }
 
     return (
-        <article className="RecipeFull">
-            <LinkButton to="/" text="Back To Search" />
+        <Box as="article">
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
             {recipe && (
-                <>
-                    <h1 className="RecipeFull__Name">{recipe.name}</h1>
+                <VStack spacing="8" alignItems="start">
+                    <Heading as="h1" size="lg">{recipe.name}</Heading>
                     {recipe.cooking_time && (
-                        <p>Cooking time: {recipe.cooking_time}</p>
+                        <Text>Cooking time: {recipe.cooking_time}</Text>
                     )}
-                    <p>{recipe.description}</p>
-                    <h2>Method</h2>
-                    <p className="RecipeFull__Method">{recipe.method}</p>
-                    <h2>Ingredients</h2>
-                    <p className="RecipeFull__Ingredients">
+                    <Text>{recipe.description}</Text>
+                    <Heading>Method</Heading>
+                    <Text>{recipe.method}</Text>
+                    <Heading>Ingredients</Heading>
+                    <Text>
                         {recipe.ingredients}
-                    </p>
-                    {recipe.url && (
-                        <p>
-                            <a href={recipe.url}>View online</a>
-                        </p>
-                    )}
-                    <LinkButton to={`${location.pathname}/edit`} text="Edit" />
-                    <ConfirmationModal
-                        confirmationMessage="Are you sure you want to delete this recipe?"
-                        onConfirm={handleDelete}
-                        buttonClass="Button Button--Danger"
-                        buttonText="Delete"
-                    />
-                </>
+                    </Text>
+                    <ButtonGroup>
+                        {recipe.url && (
+                            <Button as="a" href={recipe.url} >
+                                View online
+                            </Button>
+                        )}
+                        <LinkButton to={`${location.pathname}/edit`} text="Edit" />
+                        <ConfirmationModal
+                            confirmationMessage="Are you sure you want to delete this recipe?"
+                            onConfirm={handleDelete}
+                            buttonColorScheme="red"
+                            buttonText="Delete"
+                        />
+                    </ButtonGroup>
+                </VStack>
             )}
-        </article>
+        </Box>
     )
 }
