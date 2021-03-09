@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react'
 import { useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
 import { PaginationMeta } from '../Api/RestResponse'
-import classNames from 'classnames'
 import qs from 'qs'
 import * as R from 'ramda'
 import './PaginationLinks.css'
+import { HStack } from '@chakra-ui/layout'
+import { Link } from 'react-router-dom'
+import { Button } from '@chakra-ui/button'
 
 interface PaginationLinksProps {
     meta: PaginationMeta,
@@ -22,22 +23,22 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
     const last = Math.min(meta.current_page + Math.floor(links/ 2), meta.last_page)
 
     const pageLinks = R.range(first, last + 1).map((pageNumber) => {
-        const classes = classNames('PaginationLinks__Link', {
-            'PaginationLinks__Link--Active': meta.current_page === pageNumber
-        })
         const url = location.pathname + '?' + qs.stringify({
             ...params,
             page: pageNumber,
         })
 
-        return <Link
+        return <Button 
+            as={Link}
             key={pageNumber}
-            className={classes}
+            colorScheme="teal"
             to={url}
-        >{pageNumber}</Link>
+            variant={meta.current_page === pageNumber ? 'solid' : 'outline'}
+            disabled={meta.current_page === pageNumber}
+        >{pageNumber.toString()}</Button>
     })
 
-    return <div className="PaginationLinks">
+    return <HStack spacing="4" my="8">
         {pageLinks}
-    </div>
+    </HStack>
 }

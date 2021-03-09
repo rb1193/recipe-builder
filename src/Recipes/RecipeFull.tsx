@@ -9,7 +9,6 @@ import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import ConfirmationModal from '../lib/Modals/ConfirmationModal'
 import { LinkButton } from '../lib/Buttons/Buttons'
-import './RecipeFull.css'
 import { Box, Heading, Text, VStack } from '@chakra-ui/layout'
 import { Button, ButtonGroup } from '@chakra-ui/button'
 import { useToast } from '@chakra-ui/toast'
@@ -74,9 +73,7 @@ export default function RecipeFull(): ReactElement {
                     <Heading>Method</Heading>
                     <Text>{recipe.method}</Text>
                     <Heading>Ingredients</Heading>
-                    <Text>
-                        {recipe.ingredients}
-                    </Text>
+                    <Text>{recipe.ingredients}</Text>
                     <ButtonGroup>
                         {recipe.url && (
                             <Button as="a" href={recipe.url} >

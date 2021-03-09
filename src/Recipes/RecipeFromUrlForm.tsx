@@ -5,7 +5,6 @@ import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers } from 'formik'
 import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
 import { SubmitButton } from '../lib/Buttons/Buttons'
-import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import { LinkButton } from '../lib/Buttons/Buttons'
 import Recipe from '../Contracts/Recipe'
@@ -92,7 +91,6 @@ export default function RecipeFromUrlForm(): React.ReactElement {
     <VStack spacing="8">
       <LinkButton to="/recipes/create" text="Add Manually" />
       <Heading size="lg">Add a New Recipe from the Web</Heading>
-      <ApiLoadingMessage isLoading={isLoading} message="Fetching data..." />
       <ApiErrorMessage error={error} />
       <Formik
         component={form}

@@ -9,7 +9,6 @@ import Recipes from '../Api/Recipes'
 import { RequestError } from '../Api/RequestError'
 import Recipe from '../Contracts/Recipe'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
-import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import { ApiError, RestResponse } from '../lib/Api/RestResponse'
 import { SubmitButton } from '../lib/Buttons/Buttons'
 import TextAreaInput from '../lib/Forms/TextAreaInput'
@@ -149,7 +148,6 @@ export default function EditRecipeForm(): ReactElement {
 
   return (
     <>
-      <ApiLoadingMessage isLoading={isLoading} />
       <ApiErrorMessage error={error} />
       {recipe && (
         <>

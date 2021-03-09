@@ -7,7 +7,6 @@ import Recipes from '../Api/Recipes'
 import { useHistory } from 'react-router'
 import Recipe from '../Contracts/Recipe'
 import { RestResponse, ApiError } from '../lib/Api/RestResponse'
-import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
@@ -119,7 +118,6 @@ export default function CreateRecipeForm(): ReactElement {
     <VStack spacing="8">
       <Heading size="lg">Add a New Recipe</Heading>
       <LinkButton to="/recipes/create-from-url" text="Add from the web" />
-      <ApiLoadingMessage isLoading={isLoading} />
       <ApiErrorMessage error={error} />
       <Formik
         component={form}

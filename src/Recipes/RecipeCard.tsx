@@ -2,7 +2,6 @@ import { Heading, Text, VStack } from '@chakra-ui/layout'
 import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import { LinkButton } from '../lib/Buttons/Buttons'
-import './RecipeCard.css'
 
 interface RecipeCardProps {
     recipe: Recipe
