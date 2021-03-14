@@ -24,3 +24,6 @@ yarn-error.log*
 
 # test files
 /cypress/videos
+
+# local dev certs
+/certs
