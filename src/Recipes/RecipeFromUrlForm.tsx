@@ -11,7 +11,7 @@ import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
-import { Heading, VStack } from '@chakra-ui/layout'
+import { Box, Heading, VStack } from '@chakra-ui/layout'
 import { useToast } from '@chakra-ui/toast'
 
 type UrlFormValues = {
@@ -88,9 +88,9 @@ export default function RecipeFromUrlForm(): React.ReactElement {
   }
 
   return (
-    <VStack spacing="8">
-      <LinkButton to="/recipes/create" text="Add Manually" />
+    <VStack spacing="8" alignItems="stretch">
       <Heading size="lg">Add a New Recipe from the Web</Heading>
+      <Box alignSelf="start"><LinkButton to="/recipes/create" text="Add Manually" /></Box>
       <ApiErrorMessage error={error} />
       <Formik
         component={form}

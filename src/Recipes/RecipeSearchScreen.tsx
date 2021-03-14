@@ -70,7 +70,7 @@ export default function RecipeSearchScreen() {
                     <SubmitButton text="Search recipes" isLoading={isLoading} />
                 </VStack>
             </form>
-            <ApiErrorMessage error={error} />
+            <ApiErrorMessage error={error}/>
             <RecipeCardList isLoading={isLoading} recipes={items} />
             <PaginationLinks meta={config} links={5} includeEnds={false} />
         </>

@@ -75,7 +75,7 @@ export default function EditRecipeForm(): ReactElement {
   function form() {
     return (
       <Form noValidate>
-        <VStack spacing="8">
+        <VStack spacing="8" alignItems="stretch">
           <TextInput type={TextInputTypes.Text} name="name" label="Name" />
           <TextAreaInput name="description" label="Short Description" />
           <TextAreaInput name="method" label="Method" />

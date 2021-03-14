@@ -11,7 +11,7 @@ import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
 import { LinkButton, SubmitButton } from '../lib/Buttons/Buttons'
-import { Heading, VStack } from '@chakra-ui/layout'
+import { Box, Heading, VStack } from '@chakra-ui/layout'
 import { useToast } from '@chakra-ui/toast'
 
 export default function CreateRecipeForm(): ReactElement {
@@ -115,9 +115,9 @@ export default function CreateRecipeForm(): ReactElement {
   }
 
   return (
-    <VStack spacing="8">
+    <VStack spacing="8" alignItems="stretch">
       <Heading size="lg">Add a New Recipe</Heading>
-      <LinkButton to="/recipes/create-from-url" text="Add from the web" />
+      <Box alignSelf="start"><LinkButton to="/recipes/create-from-url" text="Add from the web"/></Box>
       <ApiErrorMessage error={error} />
       <Formik
         component={form}

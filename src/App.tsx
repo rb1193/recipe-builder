@@ -56,7 +56,7 @@ function App() {
           </Container>
         )}
       </Box>
-      <Container as="main" centerContent={isMobile} mt="8">
+      <Container as="main" alignItems="stretch" mt="8">
         <Switch>
           <Route exact path="/">
             {user ? <RecipeSearchScreen /> : <LoginForm />}

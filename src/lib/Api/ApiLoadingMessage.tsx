@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/layout';
+import { Spinner } from '@chakra-ui/spinner';
 import React, { ReactElement } from 'react'
 
 type ApiErrorMessageProps = {
@@ -8,11 +8,11 @@ type ApiErrorMessageProps = {
 
 export default function ApiLoadingMessage(props: ApiErrorMessageProps): ReactElement | null
 {
-    const { isLoading, message } = props
+    const { isLoading } = props
 
     if (isLoading) {
         return (
-            <Text>{message || 'Loading'}</Text>
+            <Spinner />
         )
     }
 

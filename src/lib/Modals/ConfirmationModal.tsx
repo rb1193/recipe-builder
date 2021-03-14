@@ -27,7 +27,7 @@ export default function ConfirmationModal(props: ConfirmationModalProps): React.
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={onConfirm}>Confirm</Button>
-                        <Button variant="ghost" onClick={onClose}>Cancel</Button>
+                        <Button variant="ghost" onClick={onClose} ml="2">Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
