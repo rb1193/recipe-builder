@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Auth from '../Api/Auth'
 import { ActionButton } from '../lib/Buttons/Buttons'
 import { useToast } from '@chakra-ui/toast'
-import { UserContext } from '../Context'
+import UserContext from '../Context'
 
 export default function LogoutButton(): React.ReactElement {
     const { setUser } = useContext(UserContext)

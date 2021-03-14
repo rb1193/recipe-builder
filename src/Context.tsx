@@ -6,4 +6,4 @@ type UserContext = {
     setUser: React.Dispatch<React.SetStateAction<User|null>>
 }
 
-export const UserContext = React.createContext<UserContext>({user: null, setUser: () => {}})
+export default React.createContext<UserContext>({user: null, setUser: () => {}})

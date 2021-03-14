@@ -9,7 +9,7 @@ import GuardedRoute from './Auth/GuardedRoute'
 import LoginForm from './Auth/LoginForm'
 import MobileNav from './MobileNav'
 
-import { UserContext } from './Context'
+import UserContext from './Context'
 import User from './Contracts/User'
 import RecipeCreateForm from './Recipes/RecipeCreateForm'
 import RecipeEditForm from './Recipes/RecipeEditForm'

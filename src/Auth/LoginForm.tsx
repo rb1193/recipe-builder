@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { Form, FormikValues, FormikHelpers, Formik } from 'formik';
 import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
-import { UserContext } from '../Context';
+import UserContext from '../Context';
 import { SubmitButton } from '../lib/Buttons/Buttons';
 import { Box, VStack } from '@chakra-ui/layout';
 
