@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router-dom'
 import { Box, Container, Heading, Text, useMediaQuery } from '@chakra-ui/react'
 
 import Auth from './Api/Auth'
-import GuardedRoute from './Auth/GuardedRoute'
 import LoginForm from './Auth/LoginForm'
 import MobileNav from './MobileNav'
 
@@ -61,21 +60,26 @@ function App() {
           <Route exact path="/">
             {user ? <RecipeSearchScreen /> : <LoginForm />}
           </Route>
-          <GuardedRoute exact path="/recipes/all" user={user}>
-            <RecipeListScreen />
-          </GuardedRoute>
-          <GuardedRoute exact path="/recipes/create" user={user}>
-            <RecipeCreateForm />
-          </GuardedRoute>
-          <GuardedRoute exact path="/recipes/create-from-url" user={user}>
-            <RecipeFromUrlForm />
-          </GuardedRoute>
-          <GuardedRoute exact path="/recipes/:recipeId/edit" user={user}>
-            <RecipeEditForm />
-          </GuardedRoute>
-          <GuardedRoute path="/recipes/:recipeId" user={user}>
-            <RecipeFull />
-          </GuardedRoute>
+          {user &&<>
+            <Route exact path="/recipes/all" >
+              <RecipeListScreen />
+            </Route>
+            <Route exact path="/recipes/create" >
+              <RecipeCreateForm />
+            </Route>
+            <Route exact path="/recipes/create-from-url" >
+              <RecipeFromUrlForm />
+            </Route>
+            <Route exact path="/recipes/:recipeId/edit" >
+              <RecipeEditForm />
+            </Route>
+            <Route path="/recipes/:recipeId" >
+              <RecipeFull />
+            </Route>
+          </>}
+          <Route path="*">
+            <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
+          </Route>
         </Switch>
       </Container>
       <Text as="footer" my="8" textAlign="center">
