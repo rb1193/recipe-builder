@@ -70,9 +70,9 @@ export default function RecipeFull(): ReactElement {
                         <Text>Cooking time: {recipe.cooking_time}</Text>
                     )}
                     <Text>{recipe.description}</Text>
-                    <Heading>Method</Heading>
+                    <Heading size="md">Method</Heading>
                     <Text whiteSpace="pre-wrap">{recipe.method}</Text>
-                    <Heading>Ingredients</Heading>
+                    <Heading size="md">Ingredients</Heading>
                     <Text whiteSpace="pre-wrap">{recipe.ingredients}</Text>
                     <ButtonGroup>
                         {recipe.url && (
