@@ -71,9 +71,9 @@ export default function RecipeFull(): ReactElement {
                     )}
                     <Text>{recipe.description}</Text>
                     <Heading>Method</Heading>
-                    <Text>{recipe.method}</Text>
+                    <Text whiteSpace="pre-wrap">{recipe.method}</Text>
                     <Heading>Ingredients</Heading>
-                    <Text>{recipe.ingredients}</Text>
+                    <Text whiteSpace="pre-wrap">{recipe.ingredients}</Text>
                     <ButtonGroup>
                         {recipe.url && (
                             <Button as="a" href={recipe.url} >
