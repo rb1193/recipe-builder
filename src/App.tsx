@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { Route, Switch } from 'react-router-dom'
 
-import { Box, Container, Heading, Text, useMediaQuery } from '@chakra-ui/react'
+import { Box, Container, Heading, Progress, Text, useMediaQuery } from '@chakra-ui/react'
 
 import Auth from './Api/Auth'
 import LoginForm from './Auth/LoginForm'
@@ -19,10 +19,11 @@ import RecipeFromUrlForm from './Recipes/RecipeFromUrlForm'
 import DesktopNav from './DesktopNav'
 
 function App() {
-  const [isMobile] = useMediaQuery('(max-width: 768px)')
   const [user, setUser] = useState<User | null>(null)
+  const [isFetchingUser, setIsFetchingUser] = useState(true)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setIsFetchingUser(true)
     Auth.user()
       .then((res) => {
         setUser(res.data)
@@ -30,61 +31,76 @@ function App() {
       .catch((err) => {
         setUser(null)
       })
+      .finally(() => setIsFetchingUser(false))
   }, [])
 
-  const nav = useMemo(() => {
-    return isMobile ? <MobileNav /> : <DesktopNav />
-  }, [isMobile])
+  const Nav = () => {
+    const [isMobile] = useMediaQuery('(max-width: 768px)')
+    return useMemo(() => {
+      return isMobile ? <MobileNav /> : <DesktopNav />
+    }, [isMobile])
+  }
 
   return (
     <UserContext.Provider value={{ user: user, setUser: setUser }}>
-      <Box as="header">
-        {user ? (
-          nav
-        ) : (
-          <Container>
-            <Heading
-              as="h1"
-              size="2xl"
-              my="8"
-              textAlign="center"
-              lineHeight="shorter"
-            >
-              My Recipe Library
+      {isFetchingUser ? <Progress size="xs" isIndeterminate /> : <>
+        <Box as="header">
+          {user ? (
+            <Nav />
+          ) : (
+            <Container>
+              <Heading
+                as="h1"
+                size="2xl"
+                my="8"
+                textAlign="center"
+                lineHeight="shorter"
+              >
+                My Recipe Library
             </Heading>
-          </Container>
-        )}
-      </Box>
-      <Container as="main" alignItems="stretch" mt="8">
-        <Switch>
-          <Route exact path="/">
-            {user ? <RecipeSearchScreen /> : <LoginForm />}
-          </Route>
-          {user &&<>
-            <Route exact path="/recipes/all" >
-              <RecipeListScreen />
-            </Route>
-            <Route exact path="/recipes/create" >
-              <RecipeCreateForm />
-            </Route>
-            <Route exact path="/recipes/create-from-url" >
-              <RecipeFromUrlForm />
-            </Route>
-            <Route exact path="/recipes/:recipeId/edit" >
-              <RecipeEditForm />
-            </Route>
-            <Route path="/recipes/:recipeId" >
-              <RecipeFull />
-            </Route>
-          </>}
-          <Route path="*">
-            <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
-          </Route>
-        </Switch>
-      </Container>
-      <Text as="footer" my="8" textAlign="center">
-        Made by Ryan
+            </Container>
+          )}
+        </Box>
+        <Container as="main" alignItems="stretch" mt="8">
+          {user ?
+            <Switch>
+              <Route exact path="/">
+                <RecipeSearchScreen />
+              </Route>
+              <Route exact path="/recipes/all" >
+                <RecipeListScreen />
+              </Route>
+              <Route exact path="/recipes/create" >
+                <RecipeCreateForm />
+              </Route>
+              <Route exact path="/recipes/create-from-url" >
+                <RecipeFromUrlForm />
+              </Route>
+              <Route exact path="/recipes/:recipeId/edit" >
+                <RecipeEditForm />
+              </Route>
+              <Route exact path="/recipes/:recipeId" >
+                <RecipeFull />
+              </Route>
+              <Route path="*">
+                <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
+              </Route>
+            </Switch>
+            :
+            <Switch>
+              <Route exact path="/">
+                <LoginForm />
+              </Route>
+              <Route path="*">
+                <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
+              </Route>
+            </Switch>}
+        </Container>
+        <Text as="footer" my="8" textAlign="center">
+          Made by Ryan
       </Text>
+      </>}
+
     </UserContext.Provider>
   )
 }

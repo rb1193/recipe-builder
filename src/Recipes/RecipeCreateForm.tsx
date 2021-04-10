@@ -91,8 +91,9 @@ export default function CreateRecipeForm(): ReactElement {
           throw new RequestError(resJson as RestResponse<ApiError>)
         }
         const data = resJson.data as Recipe
-        // Complete submission before redirecting using history API, don't be tempted to use finally()
+        // Complete submission before redirectbeth.paxton@hotmail.co.uking using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
+        setIsLoading(false);
         toast({
             title: "Recipe created.",
             description: `${data.name} created successfully`,
@@ -110,8 +111,8 @@ export default function CreateRecipeForm(): ReactElement {
           actions.setErrors(apiError.errors)
         }
         actions.setSubmitting(false)
+        setIsLoading(false)
       })
-      .finally(() => setIsLoading(false))
   }
 
   return (
