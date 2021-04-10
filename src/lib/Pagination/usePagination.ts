@@ -21,7 +21,7 @@ export function usePagination<T>(requestFn: requestFn) {
 
     const load = useCallback((params: any) => {
         setIsLoading(true)
-        fetch(requestFn(params))
+        return fetch(requestFn(params))
             .then((res: Response) => {
                 return Promise.all<Response, PaginatedRestResponse<T[] | ApiError>>([res, res.json()])
             })

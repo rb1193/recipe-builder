@@ -1,51 +1,38 @@
-import React, { useRef, FormEvent, useEffect } from 'react'
-import { useHistory } from 'react-router'
+import React, { useState, FormEvent, useEffect } from 'react'
+import { useHistory, useLocation } from 'react-router'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
 import RecipeCardList from './RecipeCardList'
 import { usePagination } from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
-import qs from 'qs'
+import qs, { ParsedQs } from 'qs'
 import { SubmitButton } from '../lib/Buttons/Buttons'
 import { Input } from '@chakra-ui/input'
 import { FormControl } from '@chakra-ui/form-control'
 import { VStack } from '@chakra-ui/layout'
 
-type QueryState = {
-    query?: string
-    page?: string
-}
-
 export default function RecipeSearchScreen() {
-    let history = useHistory()
+    const history = useHistory()
+    const location = useLocation()
+    const [searched, setSearched] = useState(false);
+    const [params, setParams] = useState<ParsedQs>(qs.parse(location.search, { ignoreQueryPrefix: true }));
 
     const { isLoading, error, items, config, load } = usePagination<Recipe>(Recipes.search)
-    const queryValue = useRef<HTMLInputElement>(null)
+    const [queryValue, setQueryValue] = useState(params?.query as string || '')
 
     useEffect(() => {
-        const unregister = history.listen(location => {
-            // Do not attempt to load data if user has left this screen
-            if (location.pathname !== '/') {
-                return
-            }
+        setParams(qs.parse(location.search, { ignoreQueryPrefix: true }))
+    }, [location])
 
-            const values: QueryState = qs.parse(location.search.slice(1))
-            load({
-                query: values.query || '',
-                page: values.page || '1',
-            })
-        })
-
-        return () => {
-            unregister()
-        }
-    }, [history, load])
+    useEffect(() => {
+        if (undefined === params.query) return
+        load(params).then(() => setSearched(true))
+    }, [params, load])
 
     function searchSubmitHandler(event: FormEvent): void {
         event.preventDefault()
-        const queryString = queryValue.current?.value || ''
-        history.push('/?query=' + queryString + '&page=1')
+        history.push('/?query=' + queryValue + '&page=1')
     }
 
     return (
@@ -62,8 +49,8 @@ export default function RecipeSearchScreen() {
                             autoComplete="off"
                             type="search"
                             name="query"
-                            defaultValue={''}
-                            ref={queryValue}
+                            value={queryValue}
+                            onChange={(e) => setQueryValue(e.target.value)}
                             placeholder="Enter some ingredients..."
                         />
                     </FormControl>
@@ -71,7 +58,7 @@ export default function RecipeSearchScreen() {
                 </VStack>
             </form>
             <ApiErrorMessage error={error}/>
-            <RecipeCardList isLoading={isLoading} recipes={items} />
+            {searched && <RecipeCardList isLoading={isLoading} recipes={items} />}
             <PaginationLinks meta={config} links={5} includeEnds={false} />
         </>
     )
