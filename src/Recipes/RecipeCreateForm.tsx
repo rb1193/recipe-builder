@@ -63,6 +63,11 @@ export default function CreateRecipeForm(): ReactElement {
           <TextAreaInput name="method" label="Method" />
           <TextAreaInput name="ingredients" label="Ingredients" />
           <TextInput
+            type={TextInputTypes.Text}
+            name="servings"
+            label="Servings"
+          />
+          <TextInput
             type={TextInputTypes.Number}
             name="cooking_time"
             label="Cooking Time (Minutes)"

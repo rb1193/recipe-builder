@@ -69,6 +69,9 @@ export default function RecipeFull(): ReactElement {
                     {recipe.cooking_time && (
                         <Text>Cooking time: {recipe.cooking_time}</Text>
                     )}
+                    {recipe.servings && (
+                        <Text>Servings: {recipe.servings}</Text>
+                    )}
                     <Text>{recipe.description}</Text>
                     <Heading size="md">Method</Heading>
                     <Text whiteSpace="pre-wrap">{recipe.method}</Text>
