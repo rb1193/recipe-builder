@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react'
 import { useLocation } from 'react-router'
 import { PaginationMeta } from '../Api/RestResponse'
 import qs from 'qs'
-import * as R from 'ramda'
 import './PaginationLinks.css'
 import { HStack } from '@chakra-ui/layout'
 import { Link } from 'react-router-dom'
@@ -22,7 +21,12 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
     const first = Math.max(1, meta.current_page - Math.floor(links / 2))
     const last = Math.min(meta.current_page + Math.floor(links/ 2), meta.last_page)
 
-    const pageLinks = R.range(first, last + 1).map((pageNumber) => {
+    const pages = []
+    for (const i of Array(last - first + 1).keys()) {
+        pages.push(i + first)
+    }
+
+    const pageLinks = pages.map((pageNumber) => {
         const url = location.pathname + '?' + qs.stringify({
             ...params,
             page: pageNumber,
