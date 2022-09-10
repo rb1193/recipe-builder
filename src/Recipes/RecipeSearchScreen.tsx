@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
@@ -13,7 +13,7 @@ import { FormControl } from '@chakra-ui/form-control'
 import { VStack } from '@chakra-ui/layout'
 
 export default function RecipeSearchScreen() {
-    const history = useHistory()
+    const navigate = useNavigate()
     const location = useLocation()
     const [searched, setSearched] = useState(false);
     const [params, setParams] = useState<ParsedQs>(qs.parse(location.search, { ignoreQueryPrefix: true }));
@@ -32,7 +32,7 @@ export default function RecipeSearchScreen() {
 
     function searchSubmitHandler(event: FormEvent): void {
         event.preventDefault()
-        history.push('/?query=' + queryValue + '&page=1')
+        navigate('/?query=' + queryValue + '&page=1')
     }
 
     return (

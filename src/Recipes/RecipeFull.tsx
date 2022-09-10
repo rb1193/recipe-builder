@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react'
-import { useParams, useLocation, useHistory } from 'react-router'
+import { useParams, useLocation, useNavigate } from 'react-router'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
 import Recipe from '../Contracts/Recipe'
@@ -16,7 +16,7 @@ import { useToast } from '@chakra-ui/toast'
 export default function RecipeFull(): ReactElement {
     const { recipeId } = useParams<{ recipeId?: string }>()
     const location = useLocation()
-    const history = useHistory()
+    const navigate = useNavigate()
     const toast = useToast()
 
     const [isLoading, setIsLoading] = useState(true)
@@ -27,15 +27,17 @@ export default function RecipeFull(): ReactElement {
         setIsLoading(true)
         fetch(Recipes.one(recipeId || ''))
             .then((res: Response) => {
-                return Promise.all<Response, RestResponse<Recipe | ApiError>>([res, res.json()])
-            })
-            .then(([res, resJson]) => {
                 if (!res.ok) {
-                    throw new RequestError(resJson as RestResponse<ApiError>)
+                    res.json().then(json => {
+                        throw new RequestError(json)
+                    })
                 }
-                setRecipe(resJson.data as Recipe)
+                return res.json()
             })
-            .catch((err) => {
+            .then((json: RestResponse<Recipe>) => {
+                setRecipe(json.data)
+            })
+            .catch((err: Error) => {
                 setError(parseRequestError(err))
             })
             .finally(() => setIsLoading(false))
@@ -53,9 +55,9 @@ export default function RecipeFull(): ReactElement {
                 isClosable: true,
                 position: 'top-left',
             })
-            history.push('/')
+            navigate('/')
         } catch (err) {
-            setError(parseRequestError(err))
+            setError(parseRequestError(err as Error))
         }
     }
 

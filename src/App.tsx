@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
-import { Route, Switch } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import { Box, Container, Heading, Progress, Text, useMediaQuery } from '@chakra-ui/react'
 
@@ -42,66 +42,50 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{ user: user, setUser: setUser }}>
-      {isFetchingUser ? <Progress size="xs" isIndeterminate /> : <>
-        <Box as="header">
-          {user ? (
-            <Nav />
-          ) : (
-            <Container>
-              <Heading
-                as="h1"
-                size="2xl"
-                my="8"
-                textAlign="center"
-                lineHeight="shorter"
-              >
-                My Recipe Library
-            </Heading>
-            </Container>
-          )}
-        </Box>
-        <Container as="main" alignItems="stretch" mt="8">
-          {user ?
-            <Switch>
-              <Route exact path="/">
-                <RecipeSearchScreen />
-              </Route>
-              <Route exact path="/recipes/all" >
-                <RecipeListScreen />
-              </Route>
-              <Route exact path="/recipes/create" >
-                <RecipeCreateForm />
-              </Route>
-              <Route exact path="/recipes/create-from-url" >
-                <RecipeFromUrlForm />
-              </Route>
-              <Route exact path="/recipes/:recipeId/edit" >
-                <RecipeEditForm />
-              </Route>
-              <Route exact path="/recipes/:recipeId" >
-                <RecipeFull />
-              </Route>
-              <Route path="*">
-                <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
-              </Route>
-            </Switch>
-            :
-            <Switch>
-              <Route exact path="/">
-                <LoginForm />
-              </Route>
-              <Route path="*">
-                <Heading textAlign="center" size="xl" my="60">Page not found</Heading>
-              </Route>
-            </Switch>}
-        </Container>
-        <Text as="footer" my="8" textAlign="center">
-          Made by Ryan
-      </Text>
-      </>}
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        {isFetchingUser ? <Progress size="xs" isIndeterminate /> : <>
+          <Box as="header">
+            {user ? (
+              <Nav />
+            ) : (
+              <Container>
+                <Heading
+                  as="h1"
+                  size="2xl"
+                  my="8"
+                  textAlign="center"
+                  lineHeight="shorter"
+                >
+                  My Recipe Library
+              </Heading>
+              </Container>
+            )}
+          </Box>
+          <Container as="main" alignItems="stretch" mt="8">
+            {user ?
+              <Routes>
+                <Route path="/" element={<RecipeSearchScreen />} />
+                <Route path="recipes">
+                  <Route path="all" element={<RecipeListScreen />}/>
+                  <Route path="create" element={<RecipeCreateForm />} />
+                  <Route path="create-from-url" element={<RecipeFromUrlForm />} />            
+                  <Route path=":recipeId/edit" element={<RecipeEditForm />} />                                  
+                  <Route path=":recipeId" element={<RecipeFull />} />                                      
+                </Route>                
+                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />                                  
+              </Routes>
+              :
+              <Routes>
+                <Route path="/" element={<LoginForm />} />                                  
+                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />                                  
+              </Routes>}
+          </Container>
+          <Text as="footer" my="8" textAlign="center">
+            Made by Ryan
+        </Text>
+        </>}
 
-    </UserContext.Provider>
+      </UserContext.Provider>
   )
 }
 

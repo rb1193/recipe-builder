@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
 import TextAreaInput from '../lib/Forms/TextAreaInput'
 import Recipes from '../Api/Recipes'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import Recipe from '../Contracts/Recipe'
 import { RestResponse, ApiError } from '../lib/Api/RestResponse'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
@@ -15,7 +15,7 @@ import { Box, Heading, VStack } from '@chakra-ui/layout'
 import { useToast } from '@chakra-ui/toast'
 
 export default function CreateRecipeForm(): ReactElement {
-  let history = useHistory()
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()
   const toast = useToast()
@@ -86,16 +86,15 @@ export default function CreateRecipeForm(): ReactElement {
     setIsLoading(true)
     fetch(Recipes.store(values))
       .then((res: Response) => {
-        return Promise.all<Response, RestResponse<Recipe | ApiError>>([
-          res,
-          res.json(),
-        ])
-      })
-      .then(([res, resJson]) => {
         if (!res.ok) {
-          throw new RequestError(resJson as RestResponse<ApiError>)
+          res.json().then(json => {
+            throw new RequestError(json)
+          })
         }
-        const data = resJson.data as Recipe
+        return res.json()
+      })
+      .then((json: RestResponse<Recipe>) => {
+        const data = json.data
         // Complete submission before redirectbeth.paxton@hotmail.co.uking using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
         setIsLoading(false);
@@ -107,7 +106,7 @@ export default function CreateRecipeForm(): ReactElement {
             isClosable: true,
             position: 'top-left',
         })
-        history.push('/recipes/' + data.id)
+        navigate('/recipes/' + data.id)
       })
       .catch((err) => {
         const apiError = parseRequestError(err)

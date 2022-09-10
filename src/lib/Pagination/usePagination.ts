@@ -23,13 +23,15 @@ export function usePagination<T>(requestFn: requestFn) {
         setIsLoading(true)
         return fetch(requestFn(params))
             .then((res: Response) => {
-                return Promise.all<Response, PaginatedRestResponse<T[] | ApiError>>([res, res.json()])
-            })
-            .then(([res, resJson]) => {
                 if (!res.ok) {
-                    throw new RequestError(resJson as PaginatedRestResponse<ApiError>)
+                    res.json().then(json => {
+                        throw new RequestError(json)
+                    })
+                    
                 }
-                const verified = resJson as PaginatedRestResponse<T[]>
+                return res.json()
+            })
+            .then((verified: PaginatedRestResponse<T[]>) => {
                 setItems(verified.data)
                 setConfig(verified.meta)
             })

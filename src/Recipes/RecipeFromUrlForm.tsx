@@ -1,5 +1,5 @@
-import React, {  useState } from 'react'
-import { useHistory } from 'react-router'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { ApiError, RestResponse } from '../lib/Api/RestResponse'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers } from 'formik'
@@ -19,7 +19,7 @@ type UrlFormValues = {
 }
 
 export default function RecipeFromUrlForm(): React.ReactElement {
-  let history = useHistory()
+  let navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()
   const toast = useToast()
@@ -53,16 +53,15 @@ export default function RecipeFromUrlForm(): React.ReactElement {
     setIsLoading(true)
     fetch(Recipes.scrape(values))
       .then((res: Response) => {
-        return Promise.all<Response, RestResponse<Recipe | ApiError>>([
-          res,
-          res.json(),
-        ])
-      })
-      .then(([res, resJson]) => {
         if (!res.ok) {
-          throw new RequestError(resJson as RestResponse<ApiError>)
+          res.json().then(json => {
+            throw new RequestError(json);
+          })
         }
-        const data = resJson.data as Recipe
+        return  res.json()
+      })
+      .then((json: RestResponse<Recipe>) => {
+        const data = json.data
         // Complete submission before redirecting using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
         setIsLoading(false)
@@ -74,7 +73,7 @@ export default function RecipeFromUrlForm(): React.ReactElement {
             isClosable: true,
             position: 'top-left',
         })
-        history.push('/recipes/' + data.id)
+        navigate('/recipes/' + data.id)
       })
       .catch((err) => {
         const apiError = parseRequestError(err)

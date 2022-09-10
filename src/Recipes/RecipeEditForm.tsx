@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
 import { Form, Formik, FormikHelpers } from 'formik'
-import { useHistory, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import * as Yup from 'yup'
 
 import parseRequestError from '../Api/parseRequestError'
@@ -19,7 +19,7 @@ import { useToast } from '@chakra-ui/toast'
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
 export default function EditRecipeForm(): ReactElement {
-  let history = useHistory()
+  const navigate = useNavigate()
   const { recipeId } = useParams<{ recipeId?: string }>()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<ApiError>()
@@ -30,16 +30,15 @@ export default function EditRecipeForm(): ReactElement {
     setIsLoading(true)
     fetch(Recipes.one(recipeId || ''))
       .then((res) => {
-        return Promise.all<Response, RestResponse<Recipe | ApiError>>([
-          res,
-          res.json(),
-        ])
-      })
-      .then(([res, resJson]) => {
         if (!res.ok) {
-          throw new RequestError(resJson as RestResponse<ApiError>)
+          res.json().then(json => {
+            throw new RequestError(json)
+          })
         }
-        setRecipe(resJson.data as Recipe)
+        return res.json()
+      })
+      .then((json: RestResponse<Recipe>) => {
+        setRecipe(json.data)
       })
       .catch((err) => {
         setError(parseRequestError(err))
@@ -105,16 +104,15 @@ export default function EditRecipeForm(): ReactElement {
     setIsLoading(true)
     fetch(Recipes.update(recipeId, values))
       .then((res) => {
-        return Promise.all<Response, RestResponse<Recipe | ApiError>>([
-          res,
-          res.json(),
-        ])
-      })
-      .then(([res, resJson]) => {
         if (!res.ok) {
-          throw new RequestError(resJson as RestResponse<ApiError>)
+          res.json().then(json => {
+            throw new RequestError(json)
+          })
         }
-        const data = resJson.data as Recipe
+        return res.json()
+      })
+      .then((json: RestResponse<Recipe>) => {
+        const data = json.data
         // Complete submission before redirecting using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
         setIsLoading(false)
@@ -129,7 +127,7 @@ export default function EditRecipeForm(): ReactElement {
         })
 
         // Redirect to recipe page
-        history.push('/recipes/' + data.id)
+        navigate('/recipes/' + data.id)
       })
       .catch((err) => {
         const apiError = parseRequestError(err)
