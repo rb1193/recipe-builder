@@ -53,9 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@percy/cypress": "^3.0.0",
     "cypress": "^10.0.0",
-    "cypress-plugin-snapshots": "^1.4.4",
     "miragejs": "^0.1.41"
   }
 }
