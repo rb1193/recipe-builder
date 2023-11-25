@@ -1,6 +1,0 @@
-{
-    "baseUrl": "http://localhost:3001",
-    "nodeVersion": "system",
-    "ignoreTestFiles": ["**/__snapshots__/*", "**/__image_snapshots__/*"],
-    "env": {}
-}
