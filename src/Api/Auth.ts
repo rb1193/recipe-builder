@@ -10,7 +10,7 @@ const Auth = {
             body: JSON.stringify({ username: values.email, password: values.password }),
             method: 'POST',
         }
-        return fetch(`${process.env.REACT_APP_API_URL}/login`, fetchOptions).then((response: Response) => {
+        return fetch(`${import.meta.env.VITE_API_URL}/login`, fetchOptions).then((response: Response) => {
             if (!response.ok) {
                 throw Error('Authentication failed')
             }
@@ -22,7 +22,7 @@ const Auth = {
             ...defaultRequestOptions,
             method: 'POST',
         }
-        return fetch(`${process.env.REACT_APP_API_URL}/logout`, options).then((res: Response) => {
+        return fetch(`${import.meta.env.VITE_API_URL}/logout`, options).then((res: Response) => {
             if (!res.ok) throw new Error('Logout failed')
             return null
         })
@@ -32,7 +32,7 @@ const Auth = {
             ...defaultRequestOptions,
             method: 'GET',
         }
-        return fetch(`${process.env.REACT_APP_API_URL}/user`, fetchOptions).then((res) => {
+        return fetch(`${import.meta.env.VITE_API_URL}/user`, fetchOptions).then((res) => {
             return res.json()
         })
     }

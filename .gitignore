@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -26,4 +27,5 @@ yarn-error.log*
 /cypress/videos
 
 # local dev certs
-/certs
+/certs/*
+!/certs/.gitkeep

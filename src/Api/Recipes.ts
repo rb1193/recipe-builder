@@ -14,7 +14,7 @@ const Recipes = {
             method: 'POST',
             body: JSON.stringify(values)
         }
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes/scrape`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes/scrape`, options)
     },
     list: (values: SearchValues): Request => {
         const options: RequestInit = {
@@ -22,7 +22,7 @@ const Recipes = {
             method: 'GET',
         }
         const params = qs.stringify(values)
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes/all?${params}`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes/all?${params}`, options)
     },
     search: (values: SearchValues): Request => {
         const options: RequestInit = {
@@ -30,7 +30,7 @@ const Recipes = {
             method: 'GET',
         }
         const params = qs.stringify(values)
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes?${params}`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes?${params}`, options)
     },
     store: (values: Omit<Recipe, 'id'>): Request => {
         const options: RequestInit = {
@@ -38,7 +38,7 @@ const Recipes = {
             method: 'POST',
             body: JSON.stringify(values)
         }
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes`, options)
     },
     update: (id: string, values: Omit<Recipe, 'id'>): Request => {
         const options: RequestInit = {
@@ -46,21 +46,21 @@ const Recipes = {
             method: 'PUT',
             body: JSON.stringify(values)
         }
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${id}`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes/${id}`, options)
     },
     one: (recipeId: string): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'GET',
         }
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes/${recipeId}`, options)
     },
     delete: (recipeId: string): Request => {
         const options: RequestInit = {
             ...defaultRequestOptions,
             method: 'DELETE',
         }
-        return new Request(`${process.env.REACT_APP_API_URL}/recipes/${recipeId}`, options)
+        return new Request(`${import.meta.env.VITE_API_URL}/recipes/${recipeId}`, options)
     }
 }
 

@@ -25,7 +25,8 @@ function LoginForm(): ReactElement {
             // Set submit before setting user because context change causes instant rerender
             actions.setSubmitting(false)
             setUser(res.data)
-        }).catch(() => {
+        }).catch((err) => {
+            console.error(err)
             actions.setErrors({email: 'Invalid credentials provided'});
             actions.setSubmitting(false);
         })
