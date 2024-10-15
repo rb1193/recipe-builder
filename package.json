@@ -31,7 +31,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "integration-test": "percy exec -- cypress run",
     "prestart": "rm -f ./node_modules/webpack-dev-server/ssl/server.pem && cp -f ./certs/server.pem ./node_modules/webpack-dev-server/ssl"
   },
   "eslintConfig": {
@@ -48,9 +47,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "cypress": "^13.0.0",
-    "miragejs": "^0.1.41"
   }
 }
