@@ -1,4 +1,4 @@
-import { Spinner } from '@chakra-ui/spinner';
+import { Spinner } from '@chakra-ui/react';
 import React, { ReactElement } from 'react'
 
 type ApiErrorMessageProps = {

@@ -9,9 +9,9 @@ import ApiLoadingMessage from '../lib/Api/ApiLoadingMessage'
 import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import ConfirmationModal from '../lib/Modals/ConfirmationModal'
 import { LinkButton } from '../lib/Buttons/Buttons'
-import { Box, Heading, Text, VStack } from '@chakra-ui/layout'
-import { Button, ButtonGroup } from '@chakra-ui/button'
-import { useToast } from '@chakra-ui/toast'
+import { Box, Heading, Text, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 
 export default function RecipeFull(): ReactElement {
     const { recipeId } = useParams<{ recipeId?: string }>()

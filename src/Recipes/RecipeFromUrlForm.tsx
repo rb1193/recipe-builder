@@ -11,8 +11,8 @@ import Recipe from '../Contracts/Recipe'
 import Recipes from '../Api/Recipes'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
-import { Box, Heading, VStack } from '@chakra-ui/layout'
-import { useToast } from '@chakra-ui/toast'
+import { Box, Heading, VStack } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 
 type UrlFormValues = {
   url: string

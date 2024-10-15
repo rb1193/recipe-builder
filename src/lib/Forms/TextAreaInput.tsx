@@ -1,7 +1,7 @@
 import React from "react";
 import { useField, FieldMetaProps, FieldInputProps, FieldHelperProps } from 'formik';
-import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
-import { Textarea } from "@chakra-ui/textarea";
+import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/react";
+import { Textarea } from "@chakra-ui/react";
 
 export interface TextAreaInputProps {
     label: string,

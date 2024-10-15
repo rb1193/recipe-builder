@@ -1,9 +1,9 @@
 import {
   Alert,
   AlertDescription,
-  AlertIcon,
   AlertTitle,
-} from '@chakra-ui/alert'
+} from '@chakra-ui/react'
+import { AlertIcon } from '@chakra-ui/icons'
 import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
 

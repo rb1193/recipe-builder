@@ -1,8 +1,8 @@
 import React from 'react'
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/modal'
-import { Button } from '@chakra-ui/button'
-import { Text } from '@chakra-ui/layout'
-import { useDisclosure } from '@chakra-ui/hooks'
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
 
 interface ConfirmationModalProps {
     confirmationMessage: string,

@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react'
 import LogoutButton from './Auth/LogoutButton'
-import { Flex, Heading, Link, VStack } from '@chakra-ui/layout'
-import { IconButton } from '@chakra-ui/button'
+import { Flex, Heading, Link, VStack } from '@chakra-ui/react'
+import { IconButton } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
-import { useDisclosure } from '@chakra-ui/hooks'
+import { useDisclosure } from '@chakra-ui/react'
 import {
   Drawer,
   DrawerCloseButton,
   DrawerContent,
   DrawerOverlay,
-} from '@chakra-ui/modal'
+} from '@chakra-ui/react'
 
 export default function MobileNav(): React.ReactElement {
   const btnRef = useRef<HTMLButtonElement>(null)

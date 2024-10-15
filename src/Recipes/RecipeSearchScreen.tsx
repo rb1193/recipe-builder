@@ -8,9 +8,9 @@ import { usePagination } from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs, { ParsedQs } from 'qs'
 import { SubmitButton } from '../lib/Buttons/Buttons'
-import { Input } from '@chakra-ui/input'
-import { FormControl } from '@chakra-ui/form-control'
-import { VStack } from '@chakra-ui/layout'
+import { Input } from '@chakra-ui/react'
+import { FormControl } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 
 export default function RecipeSearchScreen() {
     const navigate = useNavigate()

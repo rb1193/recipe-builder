@@ -13,8 +13,8 @@ import { ApiError, RestResponse } from '../lib/Api/RestResponse'
 import { SubmitButton } from '../lib/Buttons/Buttons'
 import TextAreaInput from '../lib/Forms/TextAreaInput'
 import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
-import { Heading, VStack } from '@chakra-ui/layout'
-import { useToast } from '@chakra-ui/toast'
+import { Heading, VStack } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 

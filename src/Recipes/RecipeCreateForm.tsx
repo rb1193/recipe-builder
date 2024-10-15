@@ -11,8 +11,8 @@ import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
 import { LinkButton, SubmitButton } from '../lib/Buttons/Buttons'
-import { Box, Heading, VStack } from '@chakra-ui/layout'
-import { useToast } from '@chakra-ui/toast'
+import { Box, Heading, VStack } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 
 export default function CreateRecipeForm(): ReactElement {
   const navigate = useNavigate()

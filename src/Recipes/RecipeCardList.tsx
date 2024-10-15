@@ -1,5 +1,6 @@
-import { Alert, AlertIcon } from '@chakra-ui/alert'
-import { List } from '@chakra-ui/layout'
+import { Alert } from '@chakra-ui/react'
+import { AlertIcon } from '@chakra-ui/icons'
+import { List } from '@chakra-ui/react'
 import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import RecipeCard from './RecipeCard'

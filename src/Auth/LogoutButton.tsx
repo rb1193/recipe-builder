@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Auth from '../Api/Auth'
 import { ActionButton } from '../lib/Buttons/Buttons'
-import { useToast } from '@chakra-ui/toast'
+import { useToast } from '@chakra-ui/react'
 import UserContext from '../Context'
 import { useNavigate } from 'react-router'
 

@@ -1,4 +1,4 @@
-import { Heading, Text, VStack } from '@chakra-ui/layout'
+import { Heading, Text, VStack } from '@chakra-ui/react'
 import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import { LinkButton } from '../lib/Buttons/Buttons'

@@ -5,7 +5,7 @@ import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
 import UserContext from '../Context';
 import { SubmitButton } from '../lib/Buttons/Buttons';
-import { Box, VStack } from '@chakra-ui/layout';
+import { Box, VStack } from '@chakra-ui/react';
 
 export interface LoginFormValues extends FormikValues {
     email: string,
