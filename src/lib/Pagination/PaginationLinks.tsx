@@ -4,7 +4,7 @@ import { PaginationMeta } from '../Api/RestResponse'
 import qs from 'qs'
 import './PaginationLinks.css'
 import { HStack, Button } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 interface PaginationLinksProps {
     meta: PaginationMeta,

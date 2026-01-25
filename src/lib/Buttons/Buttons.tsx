@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, ButtonProps } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 export function ActionButton(props: {text: string, onClick: (event: React.MouseEvent<HTMLButtonElement>) => void}) {
     return (<Button colorPalette="teal" type="button" onClick={props.onClick}>{props.text}</Button>)

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router'
 
 import { Box, Container, Heading, Progress, Text } from '@chakra-ui/react'
 import { useMediaQuery } from '@chakra-ui/react'

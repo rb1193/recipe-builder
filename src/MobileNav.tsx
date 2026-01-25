@@ -3,7 +3,7 @@ import LogoutButton from './Auth/LogoutButton'
 import { Flex, Heading, Link, VStack, Portal } from '@chakra-ui/react'
 import { IconButton, Drawer } from '@chakra-ui/react'
 import { HiMenu } from 'react-icons/hi'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link as RouterLink, useLocation } from 'react-router'
 import { useDisclosure } from '@chakra-ui/react'
 
 export default function MobileNav(): React.ReactElement {
