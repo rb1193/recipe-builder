@@ -1,6 +1,5 @@
-import { Alert } from '@chakra-ui/react'
-import { AlertIcon } from '@chakra-ui/icons'
-import { List } from '@chakra-ui/react'
+import { Alert, List } from '@chakra-ui/react'
+import { MdWarning } from 'react-icons/md'
 import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import RecipeCard from './RecipeCard'
@@ -17,21 +16,23 @@ export default function RecipeCardList(
 
   if (recipes.length > 0) {
     return (
-      <List spacing="8">
+      <List.Root gap="8" listStyle="none">
         {recipes.map((recipe: Recipe) => {
           return <RecipeCard key={recipe.id} recipe={recipe} />
         })}
-      </List>
+      </List.Root>
     )
   }
 
   return (
     <>
       {!isLoading && (
-        <Alert status="warning">
-          <AlertIcon />
-          No recipes found
-        </Alert>
+        <Alert.Root status="warning">
+          <Alert.Indicator>
+            <MdWarning />
+          </Alert.Indicator>
+          <Alert.Title>No recipes found</Alert.Title>
+        </Alert.Root>
       )}
     </>
   )

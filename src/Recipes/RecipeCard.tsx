@@ -10,7 +10,7 @@ interface RecipeCardProps {
 export default function RecipeCard(props: RecipeCardProps): ReactElement {
     const { recipe } = props
     return (
-        <VStack as="li" spacing="4" alignItems="start">
+        <VStack as="li" gap="4" alignItems="start">
             <Heading size="md">{recipe.name}</Heading>
             <Text>{recipe.description}</Text>
             {recipe.cooking_time && <Text>Cooking time: {recipe.cooking_time} minutes</Text>}

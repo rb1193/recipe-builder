@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormErrorMessage, FormControl, FormLabel, Input } from "@chakra-ui/react"
+import { Field, Input } from "@chakra-ui/react"
 import { useField, FieldMetaProps, FieldInputProps, FieldHelperProps } from 'formik';
 
 export enum TextInputTypes {
@@ -9,7 +9,7 @@ export enum TextInputTypes {
     Search = 'search',
     Tel = 'tel',
     Text = 'text',
-} 
+}
 
 interface TextInputProps {
     label: string,
@@ -24,10 +24,10 @@ export default function TextInput(props: TextInputProps) {
     const [field, meta]: [FieldInputProps<any>, FieldMetaProps<any>, FieldHelperProps<any>] = useField(props);
 
     return (
-        <FormControl id={id} isInvalid={meta.touched && meta.error !== undefined}>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
+        <Field.Root id={id} invalid={meta.touched && meta.error !== undefined}>
+            <Field.Label htmlFor={name}>{label}</Field.Label>
             <Input {...field} id={id || name} type={type} placeholder={placeholder}/>
-            <FormErrorMessage>{meta.error}</FormErrorMessage>
-        </FormControl>
+            <Field.ErrorText>{meta.error}</Field.ErrorText>
+        </Field.Root>
     );
 }

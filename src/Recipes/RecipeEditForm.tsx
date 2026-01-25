@@ -14,7 +14,7 @@ import { SubmitButton } from '../lib/Buttons/Buttons'
 import TextAreaInput from '../lib/Forms/TextAreaInput'
 import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
 import { Heading, VStack } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
+import { toaster } from '../components/ui/toaster'
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
@@ -24,7 +24,6 @@ export default function EditRecipeForm(): ReactElement {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<ApiError>()
   const [recipe, setRecipe] = useState<Recipe>()
-  const toast = useToast()
 
   useEffect(() => {
     setIsLoading(true)
@@ -74,7 +73,7 @@ export default function EditRecipeForm(): ReactElement {
   function form() {
     return (
       <Form noValidate>
-        <VStack spacing="8" alignItems="stretch">
+        <VStack gap="8" alignItems="stretch">
           <TextInput type={TextInputTypes.Text} name="name" label="Name" />
           <TextAreaInput name="description" label="Short Description" />
           <TextAreaInput name="method" label="Method" />
@@ -90,7 +89,7 @@ export default function EditRecipeForm(): ReactElement {
             label="Cooking Time (Minutes)"
           />
           <TextInput type={TextInputTypes.Text} name="url" label="Link" />
-          <SubmitButton text="Save Changes"  isLoading={isLoading}/>
+          <SubmitButton text="Save Changes" loading={isLoading}/>
         </VStack>
       </Form>
     )
@@ -117,13 +116,11 @@ export default function EditRecipeForm(): ReactElement {
         actions.setSubmitting(false)
         setIsLoading(false)
 
-        toast({
+        toaster.create({
             title: "Recipe saved.",
             description: `${data.name} saved successfully`,
-            status: "success",
+            type: "success",
             duration: 9000,
-            isClosable: true,
-            position: 'top-left',
         })
 
         // Redirect to recipe page

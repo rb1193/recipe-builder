@@ -8,9 +8,7 @@ import { usePagination } from '../lib/Pagination/usePagination'
 import PaginationLinks from '../lib/Pagination/PaginationLinks'
 import qs, { ParsedQs } from 'qs'
 import { SubmitButton } from '../lib/Buttons/Buttons'
-import { Input } from '@chakra-ui/react'
-import { FormControl } from '@chakra-ui/react'
-import { VStack } from '@chakra-ui/react'
+import { Input, Field, VStack } from '@chakra-ui/react'
 
 export default function RecipeSearchScreen() {
     const navigate = useNavigate()
@@ -42,8 +40,8 @@ export default function RecipeSearchScreen() {
                 className="RecipeSearchScreen__Form"
                 onSubmit={searchSubmitHandler}
             >
-                <VStack my="8" spacing="8">
-                    <FormControl id="RecipeSearch_QueryInput">
+                <VStack my="8" gap="8">
+                    <Field.Root id="RecipeSearch_QueryInput">
                         <Input
                             aria-label="Recipe search input"
                             autoComplete="off"
@@ -53,8 +51,8 @@ export default function RecipeSearchScreen() {
                             onChange={(e) => setQueryValue(e.target.value)}
                             placeholder="Enter some ingredients..."
                         />
-                    </FormControl>
-                    <SubmitButton text="Search recipes" isLoading={isLoading} />
+                    </Field.Root>
+                    <SubmitButton text="Search recipes" loading={isLoading} />
                 </VStack>
             </form>
             <ApiErrorMessage error={error}/>

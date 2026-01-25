@@ -12,13 +12,12 @@ import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
 import { LinkButton, SubmitButton } from '../lib/Buttons/Buttons'
 import { Box, Heading, VStack } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
+import { toaster } from '../components/ui/toaster'
 
 export default function CreateRecipeForm(): ReactElement {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()
-  const toast = useToast()
 
   const initialValues: Omit<Recipe, 'id'> = {
     name: '',
@@ -57,7 +56,7 @@ export default function CreateRecipeForm(): ReactElement {
   function form() {
     return (
       <Form noValidate>
-        <VStack spacing="8">
+        <VStack gap="8">
           <TextInput type={TextInputTypes.Text} name="name" label="Name" />
           <TextAreaInput name="description" label="Short Description" />
           <TextAreaInput name="method" label="Method" />
@@ -73,7 +72,7 @@ export default function CreateRecipeForm(): ReactElement {
             label="Cooking Time (Minutes)"
           />
           <TextInput type={TextInputTypes.Text} name="url" label="Link" />
-          <SubmitButton text="Create Recipe" isLoading={isLoading}/>
+          <SubmitButton text="Create Recipe" loading={isLoading}/>
         </VStack>
       </Form>
     )
@@ -95,16 +94,14 @@ export default function CreateRecipeForm(): ReactElement {
       })
       .then((json: RestResponse<Recipe>) => {
         const data = json.data
-        // Complete submission before redirectbeth.paxton@hotmail.co.uking using history API, don't be tempted to use finally()
+        // Complete submission before redirecting using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
         setIsLoading(false);
-        toast({
+        toaster.create({
             title: "Recipe created.",
             description: `${data.name} created successfully`,
-            status: "success",
+            type: "success",
             duration: 9000,
-            isClosable: true,
-            position: 'top-left',
         })
         navigate('/recipes/' + data.id)
       })
@@ -120,7 +117,7 @@ export default function CreateRecipeForm(): ReactElement {
   }
 
   return (
-    <VStack spacing="8" alignItems="stretch">
+    <VStack gap="8" alignItems="stretch">
       <Heading size="lg">Add a New Recipe</Heading>
       <Box alignSelf="start"><LinkButton to="/recipes/create-from-url" text="Add from the web"/></Box>
       <ApiErrorMessage error={error} />

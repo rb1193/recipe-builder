@@ -13,15 +13,15 @@ export default function DesktopNav(): React.ReactElement {
         <Heading size="xl" py="8">
           My Recipe Library
         </Heading>
-        <HStack spacing="8">
-          <Link as={RouterLink} to="/">
-            Search Recipes
+        <HStack gap="8">
+          <Link asChild>
+            <RouterLink to="/">Search Recipes</RouterLink>
           </Link>
-          <Link as={RouterLink} to="/recipes/create">
-            Add Recipe
+          <Link asChild>
+            <RouterLink to="/recipes/create">Add Recipe</RouterLink>
           </Link>
-          <Link as={RouterLink} to="/recipes/all">
-            All Recipes
+          <Link asChild>
+            <RouterLink to="/recipes/all">All Recipes</RouterLink>
           </Link>
           <LogoutButton />
         </HStack>

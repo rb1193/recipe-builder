@@ -1,20 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import LogoutButton from './Auth/LogoutButton'
-import { Flex, Heading, Link, VStack } from '@chakra-ui/react'
-import { IconButton } from '@chakra-ui/react'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { Flex, Heading, Link, VStack, Portal } from '@chakra-ui/react'
+import { IconButton, Drawer } from '@chakra-ui/react'
+import { HiMenu } from 'react-icons/hi'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { useDisclosure } from '@chakra-ui/react'
-import {
-  Drawer,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerOverlay,
-} from '@chakra-ui/react'
 
 export default function MobileNav(): React.ReactElement {
   const btnRef = useRef<HTMLButtonElement>(null)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   const location = useLocation()
 
   useEffect(() => {
@@ -34,40 +28,46 @@ export default function MobileNav(): React.ReactElement {
         </Heading>
         <IconButton
           aria-label="Menu"
-          icon={<HamburgerIcon />}
           size="md"
           variant="outline"
           bgColor="white"
           color="gray.500"
           ref={btnRef}
-          colorScheme="teal"
+          colorPalette="teal"
           onClick={onOpen}
-        />
+        >
+          <HiMenu />
+        </IconButton>
       </Flex>
-      <Drawer
-        isOpen={isOpen}
-        onClose={onClose}
-        placement="left"
-        finalFocusRef={btnRef}
+      <Drawer.Root
+        open={open}
+        onOpenChange={(details) => !details.open && onClose()}
+        placement="start"
+        finalFocusEl={() => btnRef.current}
       >
-        <DrawerOverlay>
-          <DrawerContent>
-            <DrawerCloseButton />
-            <VStack spacing="8" pt="8">
-              <Link as={RouterLink} to="/">
-                Search Recipes
-              </Link>
-              <Link as={RouterLink} to="/recipes/create">
-                Add Recipe
-              </Link>
-              <Link as={RouterLink} to="/recipes/all">
-                All Recipes
-              </Link>
-              <LogoutButton />
-            </VStack>
-          </DrawerContent>
-        </DrawerOverlay>
-      </Drawer>
+        <Portal>
+          <Drawer.Backdrop />
+          <Drawer.Positioner>
+            <Drawer.Content>
+              <Drawer.CloseTrigger />
+              <Drawer.Body>
+                <VStack gap="8" pt="8">
+                  <Link asChild>
+                    <RouterLink to="/">Search Recipes</RouterLink>
+                  </Link>
+                  <Link asChild>
+                    <RouterLink to="/recipes/create">Add Recipe</RouterLink>
+                  </Link>
+                  <Link asChild>
+                    <RouterLink to="/recipes/all">All Recipes</RouterLink>
+                  </Link>
+                  <LogoutButton />
+                </VStack>
+              </Drawer.Body>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </>
   )
 }

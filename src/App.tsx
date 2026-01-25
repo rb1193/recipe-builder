@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import { Routes, Route } from 'react-router-dom'
 
-import { Box, Container, Heading, Progress, Text, useMediaQuery } from '@chakra-ui/react'
+import { Box, Container, Heading, Progress, Text } from '@chakra-ui/react'
+import { useMediaQuery } from '@chakra-ui/react'
 
 import Auth from './Api/Auth'
 import LoginForm from './Auth/LoginForm'
@@ -35,7 +36,7 @@ function App() {
   }, [])
 
   const Nav = () => {
-    const [isMobile] = useMediaQuery('(max-width: 768px)')
+    const [isMobile] = useMediaQuery(['(max-width: 768px)'], { fallback: [false] })
     return useMemo(() => {
       return isMobile ? <MobileNav /> : <DesktopNav />
     }, [isMobile])
@@ -43,7 +44,7 @@ function App() {
 
   return (
       <UserContext.Provider value={{ user: user, setUser: setUser }}>
-        {isFetchingUser ? <Progress size="xs" isIndeterminate /> : <>
+        {isFetchingUser ? <Progress.Root size="xs" value={null}><Progress.Track><Progress.Range /></Progress.Track></Progress.Root> : <>
           <Box as="header">
             {user ? (
               <Nav />
@@ -68,16 +69,16 @@ function App() {
                 <Route path="recipes">
                   <Route path="all" element={<RecipeListScreen />}/>
                   <Route path="create" element={<RecipeCreateForm />} />
-                  <Route path="create-from-url" element={<RecipeFromUrlForm />} />            
-                  <Route path=":recipeId/edit" element={<RecipeEditForm />} />                                  
-                  <Route path=":recipeId" element={<RecipeFull />} />                                      
-                </Route>                
-                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />                                  
+                  <Route path="create-from-url" element={<RecipeFromUrlForm />} />
+                  <Route path=":recipeId/edit" element={<RecipeEditForm />} />
+                  <Route path=":recipeId" element={<RecipeFull />} />
+                </Route>
+                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />
               </Routes>
               :
               <Routes>
-                <Route path="/" element={<LoginForm />} />                                  
-                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />                                  
+                <Route path="/" element={<LoginForm />} />
+                <Route path="*" element={<Heading textAlign="center" size="xl" my="60">Page not found</Heading>} />
               </Routes>}
           </Container>
           <Text as="footer" my="8" textAlign="center">

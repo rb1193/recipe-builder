@@ -3,9 +3,8 @@ import { useLocation } from 'react-router'
 import { PaginationMeta } from '../Api/RestResponse'
 import qs from 'qs'
 import './PaginationLinks.css'
-import { HStack } from '@chakra-ui/react'
+import { HStack, Button } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import { Button } from '@chakra-ui/react'
 
 interface PaginationLinksProps {
     meta: PaginationMeta,
@@ -32,17 +31,20 @@ export default function PaginationLinks(props: PaginationLinksProps): ReactEleme
             page: pageNumber,
         })
 
-        return <Button 
-            as={Link}
-            key={pageNumber}
-            colorScheme="teal"
-            to={url}
-            variant={meta.current_page === pageNumber ? 'solid' : 'outline'}
-            disabled={meta.current_page === pageNumber}
-        >{pageNumber.toString()}</Button>
+        return (
+            <Button
+                asChild
+                key={pageNumber}
+                colorPalette="teal"
+                variant={meta.current_page === pageNumber ? 'solid' : 'outline'}
+                disabled={meta.current_page === pageNumber}
+            >
+                <Link to={url}>{pageNumber.toString()}</Link>
+            </Button>
+        )
     })
 
-    return <HStack spacing="4" my="8">
+    return <HStack gap="4" my="8">
         {pageLinks}
     </HStack>
 }

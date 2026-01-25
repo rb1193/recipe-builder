@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
 import Auth from '../Api/Auth'
 import { ActionButton } from '../lib/Buttons/Buttons'
-import { useToast } from '@chakra-ui/react'
+import { toaster } from '../components/ui/toaster'
 import UserContext from '../Context'
 import { useNavigate } from 'react-router'
 
 export default function LogoutButton(): React.ReactElement {
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate()
-    const toast = useToast();
 
     const logout = async() => {
         try {
@@ -16,13 +15,11 @@ export default function LogoutButton(): React.ReactElement {
             setUser(null)
             navigate('/')
         } catch (error) {
-            toast({
+            toaster.create({
                 title: "Log out failed.",
                 description: `Unable to reach server`,
-                status: "error",
+                type: "error",
                 duration: 9000,
-                isClosable: true,
-                position: 'top-left',
             })
         }
     }

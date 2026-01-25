@@ -10,14 +10,13 @@ import ApiErrorMessage from '../lib/Api/ApiErrorMessage'
 import ConfirmationModal from '../lib/Modals/ConfirmationModal'
 import { LinkButton } from '../lib/Buttons/Buttons'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react'
-import { Button, ButtonGroup } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
+import { Button, Group } from '@chakra-ui/react'
+import { toaster } from '../components/ui/toaster'
 
 export default function RecipeFull(): ReactElement {
     const { recipeId } = useParams<{ recipeId?: string }>()
     const location = useLocation()
     const navigate = useNavigate()
-    const toast = useToast()
 
     const [isLoading, setIsLoading] = useState(true)
     const [recipe, setRecipe] = useState<Recipe>()
@@ -47,13 +46,11 @@ export default function RecipeFull(): ReactElement {
         if (!recipe) return
         try {
             await fetch(Recipes.delete(recipe.id))
-            toast({
+            toaster.create({
                 title: "Recipe deleted.",
                 description: `${recipe.name} deleted successfully`,
-                status: "success",
+                type: "success",
                 duration: 9000,
-                isClosable: true,
-                position: 'top-left',
             })
             navigate('/')
         } catch (err) {
@@ -66,7 +63,7 @@ export default function RecipeFull(): ReactElement {
             <ApiLoadingMessage isLoading={isLoading} />
             <ApiErrorMessage error={error} />
             {recipe && (
-                <VStack spacing="8" alignItems="start">
+                <VStack gap="8" alignItems="start">
                     <Heading as="h1" size="lg">{recipe.name}</Heading>
                     {recipe.cooking_time && (
                         <Text>Cooking time: {recipe.cooking_time}</Text>
@@ -79,10 +76,10 @@ export default function RecipeFull(): ReactElement {
                     <Text whiteSpace="pre-wrap">{recipe.method}</Text>
                     <Heading size="md">Ingredients</Heading>
                     <Text whiteSpace="pre-wrap">{recipe.ingredients}</Text>
-                    <ButtonGroup>
+                    <Group>
                         {recipe.url && (
-                            <Button as="a" href={recipe.url} >
-                                View online
+                            <Button asChild>
+                                <a href={recipe.url}>View online</a>
                             </Button>
                         )}
                         <LinkButton to={`${location.pathname}/edit`} text="Edit" />
@@ -92,7 +89,7 @@ export default function RecipeFull(): ReactElement {
                             buttonColorScheme="red"
                             buttonText="Delete"
                         />
-                    </ButtonGroup>
+                    </Group>
                 </VStack>
             )}
         </Box>

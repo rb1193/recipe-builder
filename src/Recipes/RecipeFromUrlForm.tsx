@@ -12,7 +12,7 @@ import Recipes from '../Api/Recipes'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
 import { Box, Heading, VStack } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
+import { toaster } from '../components/ui/toaster'
 
 type UrlFormValues = {
   url: string
@@ -22,7 +22,6 @@ export default function RecipeFromUrlForm(): React.ReactElement {
   let navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()
-  const toast = useToast()
 
   const initialValues: UrlFormValues = {
     url: '',
@@ -38,9 +37,9 @@ export default function RecipeFromUrlForm(): React.ReactElement {
   const form = () => {
     return (
       <Form noValidate>
-        <VStack spacing="8">
+        <VStack gap="8">
           <TextInput type={TextInputTypes.Text} name="url" label="Link" />
-          <SubmitButton isLoading={isLoading} text="Fetch recipe" />
+          <SubmitButton loading={isLoading} text="Fetch recipe" />
         </VStack>
       </Form>
     )
@@ -65,13 +64,11 @@ export default function RecipeFromUrlForm(): React.ReactElement {
         // Complete submission before redirecting using history API, don't be tempted to use finally()
         actions.setSubmitting(false)
         setIsLoading(false)
-        toast({
+        toaster.create({
             title: "Recipe created.",
             description: `${data.name} created successfully`,
-            status: "success",
+            type: "success",
             duration: 9000,
-            isClosable: true,
-            position: 'top-left',
         })
         navigate('/recipes/' + data.id)
       })
@@ -87,7 +84,7 @@ export default function RecipeFromUrlForm(): React.ReactElement {
   }
 
   return (
-    <VStack spacing="8" alignItems="stretch">
+    <VStack gap="8" alignItems="stretch">
       <Heading size="lg">Add a New Recipe from the Web</Heading>
       <Box alignSelf="start"><LinkButton to="/recipes/create" text="Add Manually" /></Box>
       <ApiErrorMessage error={error} />

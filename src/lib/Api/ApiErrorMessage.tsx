@@ -1,9 +1,5 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@chakra-ui/react'
-import { AlertIcon } from '@chakra-ui/icons'
+import { Alert } from '@chakra-ui/react'
+import { MdError } from 'react-icons/md'
 import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
 
@@ -24,17 +20,19 @@ export default function ApiErrorMessage(
       })
 
     return (
-      <Alert
+      <Alert.Root
         status="error"
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
         textAlign="center"
       >
-        <AlertIcon />
-        <AlertTitle mr="2">{error.message}</AlertTitle>
-        {list && <AlertDescription as="ul">{list}</AlertDescription>}
-      </Alert>
+        <Alert.Indicator>
+          <MdError />
+        </Alert.Indicator>
+        <Alert.Title mr="2">{error.message}</Alert.Title>
+        {list && <Alert.Description as="ul">{list}</Alert.Description>}
+      </Alert.Root>
     )
   }
 

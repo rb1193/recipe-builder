@@ -34,10 +34,10 @@ function LoginForm(): ReactElement {
 
     function form() {
         return <Form noValidate>
-            <VStack spacing="8">
+            <VStack gap="8">
                 <TextInput name="email" label="Email" type={TextInputTypes.Email} id="login_email"></TextInput>
                 <TextInput name="password" label="Password" type={TextInputTypes.Password} id="login_password"></TextInput>
-                <SubmitButton text="Log In" isLoading={false} />
+                <SubmitButton text="Log In" loading={false} />
             </VStack>
         </Form>
     }
