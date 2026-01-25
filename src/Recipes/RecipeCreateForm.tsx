@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import { useState } from 'react'
 import { Formik, Form, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import TextInput, { TextInputTypes } from '../lib/Forms/TextInput'
@@ -14,7 +14,7 @@ import { LinkButton, SubmitButton } from '../lib/Buttons/Buttons'
 import { Box, Heading, VStack } from '@chakra-ui/react'
 import { toaster } from '../components/ui/toaster'
 
-export default function CreateRecipeForm(): ReactElement {
+export default function CreateRecipeForm() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()

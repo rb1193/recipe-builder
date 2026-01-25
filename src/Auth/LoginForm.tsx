@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { ReactElement } from 'react';
+import { useContext } from 'react';
 import { Form, FormikValues, FormikHelpers, Formik } from 'formik';
 import Auth from '../Api/Auth';
 import TextInput, {TextInputTypes} from '../lib/Forms/TextInput';
@@ -12,7 +11,7 @@ export interface LoginFormValues extends FormikValues {
     password: string,
 }
 
-function LoginForm(): ReactElement {
+function LoginForm() {
     const { setUser } = useContext(UserContext)
 
     const initialValues: LoginFormValues = {

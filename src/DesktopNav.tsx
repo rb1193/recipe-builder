@@ -1,9 +1,8 @@
-import React from 'react'
 import LogoutButton from './Auth/LogoutButton'
 import { Flex, Heading, HStack, Link } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router'
 
-export default function DesktopNav(): React.ReactElement {
+export default function DesktopNav() {
   return (
     <>
       <Flex

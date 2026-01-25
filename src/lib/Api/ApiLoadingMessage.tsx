@@ -1,12 +1,11 @@
 import { Spinner } from '@chakra-ui/react';
-import React, { ReactElement } from 'react'
 
 type ApiErrorMessageProps = {
     isLoading: boolean,
     message?: string
 }
 
-export default function ApiLoadingMessage(props: ApiErrorMessageProps): ReactElement | null
+export default function ApiLoadingMessage(props: ApiErrorMessageProps)
 {
     const { isLoading } = props
 

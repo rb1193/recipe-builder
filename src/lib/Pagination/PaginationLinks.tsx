@@ -1,4 +1,3 @@
-import React, { ReactElement } from 'react'
 import { useLocation } from 'react-router'
 import { PaginationMeta } from '../Api/RestResponse'
 import qs from 'qs'
@@ -12,7 +11,7 @@ interface PaginationLinksProps {
     includeEnds: boolean,
 }
 
-export default function PaginationLinks(props: PaginationLinksProps): ReactElement {
+export default function PaginationLinks(props: PaginationLinksProps) {
     const { links, meta } = props
     const location = useLocation()
     const params = Object.fromEntries(new URLSearchParams(location.search))

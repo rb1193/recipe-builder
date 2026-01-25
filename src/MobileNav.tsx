@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import LogoutButton from './Auth/LogoutButton'
 import { Flex, Heading, Link, VStack, Portal } from '@chakra-ui/react'
 import { IconButton, Drawer } from '@chakra-ui/react'
@@ -6,7 +6,7 @@ import { HiMenu } from 'react-icons/hi'
 import { Link as RouterLink, useLocation } from 'react-router'
 import { useDisclosure } from '@chakra-ui/react'
 
-export default function MobileNav(): React.ReactElement {
+export default function MobileNav() {
   const btnRef = useRef<HTMLButtonElement>(null)
   const { open, onOpen, onClose } = useDisclosure()
   const location = useLocation()

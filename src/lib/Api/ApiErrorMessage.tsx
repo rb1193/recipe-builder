@@ -1,15 +1,12 @@
 import { Alert } from '@chakra-ui/react'
 import { MdError } from 'react-icons/md'
-import React, { ReactElement } from 'react'
 import { ApiError } from './RestResponse'
 
 type ApiErrorMessageProps = {
   error?: ApiError
 }
 
-export default function ApiErrorMessage(
-  props: ApiErrorMessageProps,
-): ReactElement | null {
+export default function ApiErrorMessage(props: ApiErrorMessageProps) {
   const { error } = props
 
   if (error) {

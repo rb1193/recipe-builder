@@ -1,5 +1,4 @@
 import { Heading, Text, VStack } from '@chakra-ui/react'
-import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import { LinkButton } from '../lib/Buttons/Buttons'
 
@@ -7,7 +6,7 @@ interface RecipeCardProps {
     recipe: Recipe
 }
 
-export default function RecipeCard(props: RecipeCardProps): ReactElement {
+export default function RecipeCard(props: RecipeCardProps) {
     const { recipe } = props
     return (
         <VStack as="li" gap="4" alignItems="start">

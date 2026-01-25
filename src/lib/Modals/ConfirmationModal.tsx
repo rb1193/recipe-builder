@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dialog, Button, Text, Portal } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
 
@@ -9,7 +8,7 @@ interface ConfirmationModalProps {
     buttonColorScheme: string,
 }
 
-export default function ConfirmationModal(props: ConfirmationModalProps): React.ReactElement {
+export default function ConfirmationModal(props: ConfirmationModalProps) {
     const { confirmationMessage, onConfirm, buttonText, buttonColorScheme } = props
     const { open, onOpen, onClose } = useDisclosure()
 

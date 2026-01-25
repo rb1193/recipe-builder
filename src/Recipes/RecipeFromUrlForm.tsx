@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ApiError, RestResponse } from '../lib/Api/RestResponse'
 import * as Yup from 'yup'
@@ -18,7 +18,7 @@ type UrlFormValues = {
   url: string
 }
 
-export default function RecipeFromUrlForm(): React.ReactElement {
+export default function RecipeFromUrlForm() {
   let navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<ApiError>()

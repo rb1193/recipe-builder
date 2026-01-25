@@ -1,6 +1,5 @@
 import { Alert, List } from '@chakra-ui/react'
 import { MdWarning } from 'react-icons/md'
-import React, { ReactElement } from 'react'
 import Recipe from '../Contracts/Recipe'
 import RecipeCard from './RecipeCard'
 
@@ -9,9 +8,7 @@ type RecipeCardListProps = {
   isLoading: boolean
 }
 
-export default function RecipeCardList(
-  props: RecipeCardListProps,
-): ReactElement {
+export default function RecipeCardList(props: RecipeCardListProps) {
   const { recipes, isLoading } = props
 
   if (recipes.length > 0) {

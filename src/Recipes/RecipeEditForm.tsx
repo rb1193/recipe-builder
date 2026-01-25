@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Form, Formik, FormikHelpers } from 'formik'
 import { useNavigate, useParams } from 'react-router'
@@ -18,7 +18,7 @@ import { toaster } from '../components/ui/toaster'
 
 export type EditRecipeFormValues = Omit<Recipe, 'id'>
 
-export default function EditRecipeForm(): ReactElement {
+export default function EditRecipeForm() {
   const navigate = useNavigate()
   const { recipeId } = useParams<{ recipeId?: string }>()
   const [isLoading, setIsLoading] = useState(true)

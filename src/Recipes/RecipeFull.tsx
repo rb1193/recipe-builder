@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router'
 import { RequestError } from '../Api/RequestError'
 import parseRequestError from '../Api/parseRequestError'
@@ -13,7 +13,7 @@ import { Box, Heading, Text, VStack } from '@chakra-ui/react'
 import { Button, Group } from '@chakra-ui/react'
 import { toaster } from '../components/ui/toaster'
 
-export default function RecipeFull(): ReactElement {
+export default function RecipeFull() {
     const { recipeId } = useParams<{ recipeId?: string }>()
     const location = useLocation()
     const navigate = useNavigate()
